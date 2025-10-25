@@ -35,6 +35,7 @@ Nim
 ```
 
 BÖLÜM 2: VERİ TİPLERİ VE YAPILAR (TYPES)
+--------------------------------------------
 2.1	Temel ve Özel Tipler
 	* Sayısal: `i8`, `i32`, `i64`, `f32`, `f64` (Alias: **`int`**, **`float`**).
 	* İşaretçi: **`ptr`**.
@@ -271,6 +272,7 @@ Nim
 ```
 	
 BÖLÜM 5: KONTROL AKIŞI
+----------------------------------------------------
 5.1	Koşullu ve Döngü İfadeleri	if, else, while, for, break, continue.
 	* `if`, `else`, `while`, Basitleştirilmiş `for`.
 	* Döngü Kontrolü: **`break`** ve **`continue`**.
@@ -388,6 +390,7 @@ Nim
 ```
 
 BÖLÜM 6: BELLEK VE GÜVENLİK MODELİ
+--------------------------------------------------------
 6.1	Varsayılan Bellek Modeli	Sahibiyet (Ownership) kuralları ve otomatik yönetim.
 	* **Otomatik Yönetim:** Dinamik tipler (`list`, `string`) **Sahibiyet (Ownership)** kurallarına göre otomatik olarak serbest bırakılır.
 	* **Manuel Kontrol:** **`mem`** grubu altındaki fonksiyonlar (`mem.Alloc`, `mem.Free`, vb.) yalnızca gerektiğinde kullanılır.
@@ -516,6 +519,8 @@ file	`file.Open("data.txt", "r")`, `file.Delete(path)`	Yerel dosya G/Ç işlemle
 Modül	`use math { Add };`	Kodun içe/dışa aktarılması (export).
 
 -------------------------------------------------------------------------------
+
+
 Modül Yazımı:
 ---------------------------------------------
 Uygulama Örneği: `Modül` İçinde `group` Kullanımı
