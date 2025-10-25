@@ -2,6 +2,7 @@ NIM PROGRAMLAMA DİLİ - NİHAİ TEKNİK ŞARTNAMESİ (README)
 ====================================================================
 
 -------------------------------------------------------------
+```
 BÖLÜM 1: GİRİŞ VE TEMELLER (CORE)
 1.0	Felsefe ve Versiyon	Dilin misyonu, V3.0 bilgisi.
 1.1	Temel Söz Dizimi	Bloklar ({}), Satır Sonu (;), Yorumlar (//, /*...*/).
@@ -42,7 +43,7 @@ BÖLÜM 7: MODÜLERLİK VE SİSTEM
 7.1	Modül Sistemi	export (Dışa aktarma) ve use (Seçici/Tam İçe aktarma) kuralları.
 7.2	Yerel G/Ç Fonksiyonları	Print, Input, len(data) ve değişken interpolasyonu.
 7.3	Sistem Grupları	file grubu ve diğer çekirdek kütüphaneler.
-
+```
 ======================================================================
 
 BÖLÜM 1: GİRİŞ VE TEMELLER (CORE)
