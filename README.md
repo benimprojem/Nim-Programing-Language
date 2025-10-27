@@ -1,11 +1,11 @@
 NIM PROGRAMLAMA DİLİ - NİHAİ TEKNİK ŞARTNAMESİ (README)
 ====================================================================
-
 -------------------------------------------------------------
-```
+
 BÖLÜM 1: GİRİŞ VE TEMELLER (CORE)
 1.0	Felsefe ve Versiyon	Dilin misyonu, V3.0 bilgisi.
-1.1	Temel Söz Dizimi	Bloklar ({}), Satır Sonu (;), Yorumlar (//, /*...*/).
+1.1 Temel Söz Dizimi: Büyük-küçük harf duyarsızlığı kuralı tüm anahtar kelimeler ve tanımlayıcılar için geçerlidir. 
+(For, fOr, FOR hepsi for olarak kabul edilir). Bloklar ({}), Satır Sonu (;), Yorumlar (//, /*...*/).
 1.2	Değişkenler ve Tanımlama	var, const ve Tip Çıkarımı.
 
 BÖLÜM 2: VERİ TİPLERİ VE YAPILAR (TYPES)
@@ -24,8 +24,8 @@ BÖLÜM 3: FONKSİYONLAR VE KAPSAM
 
 BÖLÜM 4: OPERATÖRLER VE İFADELER
 4.1	Operatör Önceliği	Tam Öncelik ve İlişkilendirme Tablosu.
-4.2	Aritmetik ve Mantıksal Operatörler	+, -, *, /, &&, 
-4.3	Bit Düzeyi Operatörler	&, ^
+4.2	Aritmetik ve Mantıksal Operatörler	+, -, *, /, &&, `
+4.3	Bit Düzeyi Operatörler	&, `
 4.4	İşaretçi Operatörleri	& (Adres alma) ve * (Dereference)
 
 BÖLÜM 5: KONTROL AKIŞI
@@ -36,14 +36,15 @@ BÖLÜM 5: KONTROL AKIŞI
 
 BÖLÜM 6: BELLEK VE GÜVENLİK MODELİ
 6.1	Varsayılan Bellek Modeli	Sahibiyet (Ownership) kuralları ve otomatik yönetim.
-6.2	Hata Yolu	Option<T>, Result<T, E> ve try-catch-finally kullanımı.
-6.3	Manuel Kontrol (mem Grubu)	Düşük seviyeli bellek kontrol fonksiyonları (mem.Alloc, mem.Free, vb.).
+6.2	Hata Yolu	Option<T>, Result<T, E> kullanımı.
+6.3	Manuel Kontrol (memory Grubu)	Düşük seviyeli bellek kontrol fonksiyonları (memory.Alloc, memory.Free, vb.).
 
 BÖLÜM 7: MODÜLERLİK VE SİSTEM
 7.1	Modül Sistemi	export (Dışa aktarma) ve use (Seçici/Tam İçe aktarma) kuralları.
 7.2	Yerel G/Ç Fonksiyonları	Print, Input, len(data) ve değişken interpolasyonu.
 7.3	Sistem Grupları	file grubu ve diğer çekirdek kütüphaneler.
-```
+7.4 cpu | cpu.set_reg(id, value), cpu.get_reg(id) | Düşük seviyeli CPU kaydedici (Register) erişimi ve Hızlı Yürütme Kapsamları.
+
 ======================================================================
 
 BÖLÜM 1: GİRİŞ VE TEMELLER (CORE)
@@ -83,9 +84,10 @@ var position: (i32, i32) = (100, 250);
 BÖLÜM 2: VERİ TİPLERİ VE YAPILAR (TYPES)
 -----------------------------------------------
 2.1	Temel ve Özel Tipler
-* Sayısal: `i8`, `i32`, `i64`, `f32`, `f64` (Alias: **`int`**, **`float`**).
-* İşaretçi: **`ptr`**.
-* Metin: **`str`** (Varsayılan UTF-8). Kesin kodlama: `var msg: str: utf16 = "Data";`
+Sayısal: `i8`, `i32`, `i64`, `i128`, `f32`, `f64`, `f128` (Alias: `int`, `float`).
+		 `u8`, `u16`, `u32`, `u64`,  `u128` gibi...
+İşaretçi: `ptr`.
+Metin: `str` (Varsayılan UTF-8). Kesin kodlama: `var msg: str: utf16 = "Data";`
 Temel tiplerin bit genişliği kesindir. Açık Tip Dönüşümü (Casting) veri kaybı riskine karşı zorunludur.
 ```
 Nim
@@ -100,8 +102,8 @@ var ptr_data: ptr = null;
 ```
 
 2.2	Koleksiyon Tipleri	array, list, map, Tuple (Demetler).
-* `array`, `list: T`, `map: K, V`.
-* **Tuple (Demetler):** Birden fazla değer döndürmek için kullanılır. (Örn: `(int, string)` tipi).
+`array`, `list: T`, `map: K, V`.
+Tuple (Demetler): Birden fazla değer döndürmek için kullanılır. (Örn: `(int, string)` tipi).
 
 
 2.3	Yapılar ve Numaralandırmalar	struct, enum.
@@ -155,7 +157,7 @@ var small_num: i32 = ((i32)large_num);
 BÖLÜM 3: FONKSİYONLAR VE KAPSAM
 ----------------------------------------------------------------------
 3.1	Fonksiyon Tanımı	fn söz dizimi, void dönüşsüz fonksiyonlar.
-| **fn** | Fonksiyon tanımı. |
+| fn | Fonksiyon tanımı. |
 * Fonksiyon Parametreleri ve Dönüş: `<Dönüş Tipi> fn <İsim>(<param: tip>)`.
 Örnek: `int fn Add(a: int, b: int) { return a + b; }`
 
@@ -194,8 +196,10 @@ void fn Main() {
 	Print("Uzaklık: {dist}");
 }
 ```
+3.3 Asenkron Programlama: async (asenkron fonksiyon tanımı) ve await (asenkron sonucu bekleme) anahtar kelimeleri eklenir. Bu, sistem programlama ve ağ işlemlerinde Coroutine tabanlı eşzamanlılığı sağlar.
 
-3.3	Parametreler	Opsiyonel Argümanlar (param: tip = değer) ve İsimli Argüman Çağrısı.
+3.4	Parametreler	
+Opsiyonel Argümanlar (param: tip = değer) ve İsimli Argüman Çağrısı.
 İsimli ve Opsiyonel Argümanlar
 Fonksiyon çağrılarını esnekleştirir ve okunabilirliği artırır.
 Opsiyonel Argüman: Fonksiyon tanımında parametreye varsayılan değer atanarak oluşturulur.
@@ -222,7 +226,7 @@ void fn Main() {
 }
 ```
 
-3.4 Fonksiyon Tanımlama (`fn`)
+3.5 Fonksiyon Tanımlama (`fn`)
 I.Dönüş tipi fonksiyon adından önce gelir. void dönüşsüz fonksiyonlar için kullanılır.
 
 ```
@@ -242,9 +246,11 @@ void fn Greeting(name: string) {
 II.	Geri Dönüş Standardı	$Fonksiyon_Adı ile anlık geri dönüş değerine erişim ve $Fonksiyon_Adı[indeks] ile Tuple ayrıştırması.
 Geri Dönüş Değeri Standardının Genellenmesi Bu, dilin en güçlü ve özgün özelliklerinden biri olacaktır. 
 Fonksiyonel programlamadaki `Tuple` (Demet) dönüşlerini, C++'daki geçici nesneye erişim gibi kolaylaştırır.
-1. Genel Kural: Tekil Dönüş Değeri ve `$Fonksiyon_Adı` Bir fonksiyon normalde tek bir değer döndürür (int, string, struct, vb.).
+1. Genel Kural: Tekil Dönüş Değeri ve `$Fonksiyon_Adı` Bir fonksiyon normalde tek bir değer döndürür (int, string, struct, vb.) yada (void) döndürmez.
 Fonksiyon çağrısının hemen ardından, bu tek değer, `$Fonksiyon_Adı` değişkeninde otomatik olarak saklanır.
+void ise değer yoktur ve void tanımlanmış fonksiyon $fonksiyon oluşturmaz. 
 Örn: `int fn GetCode();` çağrısı sonrası `$GetCode int` değerini taşır.
+Örn: `void fn GetCodec();` çağrısı sonrası `$GetCodec` oluşturulmaz.
 
 2. Çoklu Dönüş Değeri Kuralı (`Tuple` ve `İndeksleme`)Fonksiyonun dönüş tipi bir `Tuple` (Demet) ise, 
 bu yapının tamamına `$Fonksiyon_Adı` ile erişilir ve ayrı elemanlara C stili indeksleme ile erişilir.
@@ -278,7 +284,7 @@ Tuple tabanlı hata tiplerini kullanmayı son derece pratik ve okunaklı hale ge
 (Tutarlılık düzeltmesi)Tüm fonksiyon dönüş değerleri, `$Fonksiyon_Adı` ile anlık olarak erişilebilir.
 Çoklu dönüş değerleri (`Tuple`), `$Fonksiyon_Adı[indeks]` yapısıyla kolayca ayrıştırılabilir.
 
-3.5	Lambda ve Anonim Fonksiyonlar	fn (x: int): int -> ... söz dizimi.
+3.6	Lambda ve Anonim Fonksiyonlar	fn (x: int): int -> ... söz dizimi.
 Lambda/Anonim Fonksiyonlar: `fn (x: int): int -> x * 2;`
 
 BÖLÜM 4: OPERATÖRLER VE İFADELER
@@ -392,17 +398,13 @@ const MAX_RETRIES = 3;
 REQUEST_BLOCK: { // İlk girişte $roll_count = 0
 	Print("Deneme {$rolling}...");
 	
-	try {
-		// ... riskli kod ...
+	if ($rolling < MAX_RETRIES) {
+		// Sayacı 1 artırır ve başa döner.
+		rolling: REQUEST_BLOCK; 
+	} else {
+		throw new Exception("Kalıcı Bağlantı Hatası.");
 	}
-	catch (e: Exception) {
-		if ($rolling < MAX_RETRIES) {
-			// Sayacı 1 artırır ve başa döner.
-			rolling: REQUEST_BLOCK; 
-		} else {
-			throw new Exception("Kalıcı Bağlantı Hatası.");
-		}
-	}
+	
 }
 ```
 
@@ -436,21 +438,25 @@ Etiketli giriş noktalarına sahip modüler kapsayıcı. `def` varsayılan etike
 ```
 Nim
 
-group TaskGroup() {
+group TaskGroup(x,y,z) {
 	var base_value = 10;
 	
 	// Etiketli fonksiyon
 	cube: { return x * x * x; } 
 	
-	sub_group: group() {
+	sub_group: group(x) {
+		kare: { return x * x; }
 		def: { Print("Alt Grup Çalıştı."); }
 	}
 	
-	def: { Print("Ana Grup Varsayılan İş."); }
+	def: { Print("Ana Grup Varsayılan İş. kayıt:{base_value}"); }
 }
 
 void fn Main() {
-	TaskGroup.sub_group(); // Alt grup def bloğunu çağırır.
+	TaskGroup(); // def bloğunu çağırır. // çıktı: "Ana Grup Varsayılan İş.  kayıt:10"
+	TaskGroup.cube(3); // cube bloğunu çağırır. // çıktı: "27" 
+	TaskGroup.sub_group.kare(3); // Alt grup kare bloğunu çağırır. // çıktı: "9"
+	TaskGroup.sub_group(); // Alt grup def bloğunu çağırır. // çıktı: "Alt Grup Çalıştı."
 }
 ```
 
@@ -458,11 +464,10 @@ BÖLÜM 6: BELLEK VE GÜVENLİK MODELİ
 -------------------------------------------------
 6.1	Varsayılan Bellek Modeli	Sahibiyet (Ownership) kuralları ve otomatik yönetim.
 * **Otomatik Yönetim:** Dinamik tipler (`list`, `string`) **Sahibiyet (Ownership)** kurallarına göre otomatik olarak serbest bırakılır.
-* **Manuel Kontrol:** **`mem`** grubu altındaki fonksiyonlar (`mem.Alloc`, `mem.Free`, vb.) yalnızca gerektiğinde kullanılır.
+* **Manuel Kontrol:** **`memory`** grubu altındaki fonksiyonlar (`memory.Alloc`, `memory.Free`, vb.) yalnızca gerektiğinde kullanılır.
 
-6.2	Hata Yolu	`Option<T>`, `Result<T, E>` ve `try-catch-finally` kullanımı.
-* Standart Hata Yönetimi: `try-catch-finally` blokları.
-* **Hata Yolu:** İşlem sonucunu temsil eden tipler:
+6.2	Hata Yolu	`Option<T>`, `Result<T, E>` kullanımı.
+Hata Yolu: İşlem sonucunu temsil eden tipler:
 	* **`Option<T>`**: Değerin var veya yok (null) olduğunu belirtir.
 	* **`Result<T, E>`**: Başarılı değer (`T`) veya hata değeri (`E`) döndürür.
 Hata fırlatmak yerine (`throw`), sonucu dönüş tipine gömerek hatasız yolu zorlar.
@@ -478,12 +483,14 @@ Result: int, string fn SafeDivide(a: int, b: int) {
 }
 ```
 
-6.3	Manuel Kontrol (mem Grubu)	Düşük seviyeli bellek kontrol fonksiyonları (mem.Alloc, mem.Free, vb.).
-`mem` Grubu: Manuel bellek kontrolü (`mem.Alloc`, `mem.Free`, `mem.Copy`, vb.).
+6.3	Manuel Kontrol (memory Grubu)	
+Düşük seviyeli bellek kontrol fonksiyonları.
+`memory` Grubu: Manuel bellek kontrolü (`memory.Alloc`, `memory.Calloc`,`memory.Free`, `memory.Copy`, vb.).
 
 
 BÖLÜM 7: MODÜLERLİK VE SİSTEM
 ---------------------------------------------------
+
 7.1	Modül Sistemi	export (Dışa aktarma) ve use (Seçici/Tam İçe aktarma) kuralları.
 Modül Sisteminin Çalışma Şekli
 A. Varsayılan Görünürlük (Gizlilik)
@@ -559,6 +566,7 @@ Bu yapı, büyük projelerde isimlendirme karmaşasını minimuma indirir ve kod
 7.2	Yerel G/Ç Fonksiyonları	Print, Input, len(data) ve değişken interpolasyonu.
 G/Ç ve Diğer Yerel Fonksiyonlar
 `Print("Text {var}")`: Konsola çıktı yazdırır, değişken interpolasyonu destekler.
+`Print("Text { var }")`:  { var }, { var}, {var }, /{var/} değişken değil string dir. 
 `Input(prompt)`: Kullanıcıdan girdi alır.
 `len(data)`: Koleksiyon/string uzunluğunu döndürür.
 ```
@@ -576,11 +584,56 @@ var count = len(nums); // len(data) söz dizimi
 Bu gruplar, çekirdek işlevsellikleri içerir.
 
 Grup	Fonksiyon (Örn.)	Açıklama
-mem		`mem.Alloc(size)`, `mem.Free(ptr)`, `mem.Copy(dest, src, size)`	Manuel bellek yönetimi.
+memory		`memory.Alloc(size)`, `memory.Free(ptr)`, `memory.Copy(dest, src, size)`	Manuel bellek yönetimi.
 
 file	`file.Open("data.txt", "r")`, `file.Delete(path)`	Yerel dosya G/Ç işlemleri.
 
 Modül	`use math { Add };`	Kodun içe/dışa aktarılması (export).
+
+7.4 CPU VE PERFORMANS KONTROLÜ
+-------------------------------------------------------------------
+
+7.4.1 Kaydedici Erişimi (cpu Grubu)
+Programcının kritik performans algoritmalarında hız optimizasyonu yapabilmesi için doğrudan CPU kaydedicilerine erişim sağlar.
+
+Tip Güvenliği: Fonksiyonlar, `Generic (<T>)` olarak uygulanır. Okuma ve yazma işlemlerinde değerin tipi belirtilmelidir.
+Mimari Bağımlılık: Kaydedici ID'leri `(id)`, derleme hedefi olan mimariye `(x86, ARM vb.)` göre semantik olarak eşlenir.
+Söz Dizimi Açıklama:  `cpu.set_reg(id: i32, value: T)` Belirtilen id (kaydedici numarası) konumuna value değerini yazar.
+`T fn cpu.get_reg(id: i32)` Belirtilen kaydedicideki değeri okur ve `T` tipine dönüştürür.
+
+7.4.2 Hızlı Yürütme Kapsamı 
+`(fast_exec: ETİKET)` Derleyiciye, belirli bir kod bloğu içindeki değişkenlerin ve işlemlerin kaydedici tahsisine öncelik verilmesi gerektiğini belirtir.
+Kural: Bu blok içindeki değişkenler için derleyici, yığın `(stack)` yerine kaydedicileri kullanmaya çalışır.
+Söz Dizimi:
+```
+Nim
+fast_exec: {
+	// Sanal regsiter lar üretir. Derleyici bu register  öncelikli, olarak kod bütünlüğüne göre registerları ayarlar.
+    // Bu bloktaki kod, kaydedici optimizasyonunda önceliklidir.
+    // Hız kritik algoritmalar (Sıralama, Arama) buraya yazılır.
+
+    cpu.set_reg(0, 0); // R0'a başlangıç değeri ata
+
+    while (cpu.get_reg(0) < 10) {
+        // ...
+        cpu.set_reg(0, cpu.get_reg(0) + 1); 
+    }
+}
+```
+
+Kural: `cpu.asm: { ... }`: 
+Bu blok, kodlayıcının doğrudan Assembly (ASM) komutlarını hedef mimarinin söz dizimine uygun olarak yazmasına izin verir. 
+Bu bloklar, otomatik olarak fast_exec kapsamı içinde kabul edilir.
+Örnek:
+```	
+Nim cpu.asm: {
+	mov rax, [rbx] // rbx adresindeki değeri rax'e taşı 
+	add rax, 10 // rax'a 10 ekle 
+}
+```
+ASM bloğu içindeki NIM değişkenleri, özel bir söz dizimi `(%değişken_adı)` kullanılarak 
+Kaydediciler veya yığın adresleri olarak referans alınabilir. (Örn: `add rax, %sayac_degeri`)
+
 ----------------------------------------------------------------------------
 
 
