@@ -7,10 +7,12 @@ Philosophy: Procedural, Functional, Modular, Safe Control.
 
 1.1 BASIC SYNTAX
 NIM adopts C-style syntax.
-
-Comments: Single: `// single-line comment`. Multiple: `/* multi-line comment */`
-All blocks are defined with `{}`, and statements are terminated with a semicolon (`;`).
-
+```
+Comments: Single: `// single-line comment`. 
+Multiple: `/* multi-line comment */`
+All blocks are defined with `{}`, 
+and statements are terminated with a semicolon (`;`).
+```
 1.2 VARIABLES
 General rules for naming variables are as follows:
 Names can contain letters, numbers, and underscores.
@@ -67,6 +69,7 @@ CHAPTER 2: DATA TYPES
 ----------------------------------------------------------------------------
 
 2.1 Basic and Special Types
+```
 Numeric: `i8`, `i16`, `i32`, `i64`, `i128`, `f32`, `f64`, `f128`
 `u8`, `u16`, `u32`, `u64`, `u128`
 
@@ -94,10 +97,10 @@ The `add(a:i32...)` syntax tells the function to pass only a variable number of 
 
 `any` = Variable/Mixed Type (Heterogeneous). `str` can be any one of `int`, `float`, `arr`, etc., or multiple mixed types.
 When used as a Multiple Return Type, `(return myret:any(a:i32, b:str);)` returns values ​​from different types together and can be accessed as an array (`myret[0]` returns i32).
-
+```
 2.2 The bit width of basic types is strict. Explicit Casting is mandatory to prevent data loss.
 
-
+```
 Nim
 
 var large_num:i64 = 9000000000;
@@ -107,7 +110,7 @@ var ratio:f64 = 1.25;
 
 // Pointer type
 var ptr_data:ptr = null;
-
+```
 
 
 2.3 Numbers: This supports the use of the letter (e or E) to indicate "10 to the power of 10."
@@ -125,7 +128,7 @@ small_num:i32 = to_i32(large_num); // Converts to i32. The to_i32() function per
 
 CHAPTER 3: OPERATORS
 ------------------------------------------------------------------------------------------------
-
+```
 3.1 Arithmetic operators
 `+` Addition
 `-` Subtraction
@@ -176,6 +179,7 @@ Bitwise operators operate on individual bits of integers
 `~` : NOT -
 `<<`: Left shift
 `>>`: Right shift
+```
 
 CHAPTER 4: BUILT-IN FUNCTIONS CONTROL STATEMENTS
 --------------------------------------------------------------------------------------
@@ -215,18 +219,18 @@ Checks a value against multiple patterns.
 Nim
 
 fn CheckStatus(code: int):void {
-match (code) {
-200: {
-echo("Operation Successful.");
-}
-404: {
-// Multiple patterns in a single block
-echo("Page not found.");
-}
-def: { // Default case
-echo("Unknown HTTP code.");
-}
-}
+	match (code) {
+		200: {
+			echo("Operation Successful.");
+		}
+		404: {
+			// Multiple patterns in a single block
+			echo("Page not found.");
+		}
+		def: { // Default case
+			cho("Unknown HTTP code.");
+		}
+	}
 }
 ```
 
@@ -240,21 +244,21 @@ const MAX_RETRIES = 3;
 
 REQUEST_BLOCK: { // Where $rolling = 0
 
-connect = network.HTTP.connect(url);
-// error checks....
-if(connect){
-/* success...*/
+	connect = network.HTTP.connect(url);
+	// error checks....
+	if(connect){
+		/* success...*/
 
-}
-elseif ($rolling < MAX_RETRIES) {
-echo("Try {$rolling}...");
-// Increments the counter by 1 and returns to the beginning.
-rolling:REQUEST_BLOCK; // Increments $rolling by 1 and returns to the beginning.
-}
-else {
-// Failed to connect after 3 retries.
-echo("Permanent Connection Error.");
-}
+	}
+	elseif ($rolling < MAX_RETRIES) {
+		echo("Try {$rolling}...");
+		// Increments the counter by 1 and returns to the beginning.
+		rolling:REQUEST_BLOCK; // Increments $rolling by 1 and returns to the beginning.
+	}
+	else {
+		// Failed to connect after 3 retries.
+		echo("Permanent Connection Error.");
+	}
 }
 ```
 
@@ -276,22 +280,22 @@ It is a modular container with labeled entry points. `def` is the default label.
 Nim
 
 group TaskGroup(x:i32, y:i32, z:i32) {
-//
-val:i32 = 10;
+	//
+	val:i32 = 10;
 
-// Labeled function
-double: fn (x:i32):i32 -> x * 2;
+	// Labeled function
+	double: fn (x:i32):i32 -> x * 2;
 
-cube: { return x * x * x; }
-// Subgroup
-sub_group: group(x) {
-// Subgroup label
-square: { return x * x; }
-// Subgroup default, not required.
-def: { echo("Subgroup default. Enrollment: {val}"); }
-}
-// group Default. Not required.
-def: { echo("Main Group Default. Enrollment: {val}"); }
+	cube: { return x * x * x; }
+	// Subgroup
+	sub_group: group(x) {
+		// Subgroup label
+		square: { return x * x; }
+		// Subgroup default, not required.
+		def: { echo("Subgroup default. Enrollment: {val}"); }
+	}
+	// group Default. Not required.
+	def: { echo("Main Group Default. Enrollment: {val}"); }
 }
 
 void fn Main() {
@@ -308,19 +312,20 @@ TaskGroup.sub_group(); // calls the subgroup def block if it exists. // output: 
 i:i8 = 0;
 
 while (i < 5) {
-echo("\n{i}");
-i++;
+	echo("\n{i}");
+	i++;
 }
 ```
 4.6 For Loop:
+```
 `for (i, i < 5, i++) {...}` // i starts from 0
 `for (i=1, i <5, i++) {...}` // i starts from 1
-
+```
 (For operation on arrays) `for (myArr in val) {...}` // assigns the elements in an array (myArr) to (x) in order, starting from the first element. It stops when all elements in the array are exhausted.
 ```
 colors:arr = ("red", "green", "blue", "yellow");
 for (colors in x) {
-echo(x);
+	echo(x);
 }
 
 ```
@@ -329,25 +334,25 @@ Even if the end of the loop has not been reached, we can stop the loop with the 
 ```
 colors:arr = ("red", "green", "blue", "yellow");
 for (colors in color) {
-if (color == "blue") break;
-echo("\n{color}");
+	if (color == "blue") break;
+	echo("\n{color}");
 }
 ```
 
 When a specified condition is met, the statement `continue` breaks an iteration (in the loop) and continues with the next iteration in the loop.
 ```
 for (i, i < 10, i++) {
-if (i == 4) {
-continue;
-}
-echo("\n{i}");
+	if (i == 4) {
+		continue;
+	}
+	echo("\n{i}");
 }
 ```
 
 4.8 Native I/O Functions echo, Input, len(data), and variable interpolation. These functions do not require an external module.
 I/O and Other Native Functions
 echo can also be used locally without any modules.requests.
-
+```
 `echo("Text {var}")`: Prints output to the console, supports variable interpolation. `{val}` cannot have spaces on the right or left of curly brackets.
 `echo("Text { var }")`: `{ var }`, `{ var}`, `{var }`, `\{var}` are not variables, but strings.
 `echo(var)`: var is a variable here. When written without "", only variable names can be used to print.
@@ -355,6 +360,8 @@ echo can also be used locally without any modules.requests.
 `prompt:i32 = input("Enter a number?")`: Takes input from the user. //print, in input module: io
 `len(data)`: Returns the length of the collection/string.
 Escape characters such as `\` are supported.
+```
+
 ```
 Nim
 
@@ -376,19 +383,20 @@ Function Parameters and Return: `fn <Name>(<param:type>,...):<Return Type>{...} 
 Nim:
 
 fn addNumbers(a:f32, b:f32):f32 {
-return a + b;
+	return a + b;
 }
 
 echo(addNumbers(1.2, 5.2));
 
 ```
-
+```
 `fn func_name(...):i32{//...}` // multiple parameter acceptance.
 `fn func_name(myarr[]):arr{//...}` // takes an array as a parameter and returns an array.
 `fn func_name():void{//...}` // void non-return functions.
 `fn func_name(){//...}` // void non-return functions.
 `fn (x:i32):i32 -> x * 2;` // Lambda/Anonymous Functions
 `echo("Square a Number: {square(input("Enter a number:"))}");` // function use for parameters.
+```
 
 5.2 Optional Arguments (param:type = value) and Named Argument Calling.
 Named and Optional Arguments
@@ -401,19 +409,19 @@ Example Usage:
 ```
 Nim
 
-void fn Render:void(x:i32, color:str = "blue", size:i32 = 10) {
-echo("X:{x}, Color:{color}, Size:{size}");
+fn Render:void(x:i32, color:str = "blue", size:i32 = 10) {
+	echo("X:{x}, Color:{color}, Size:{size}");
 }
 
-void fn Main() {
-// 1. Use defaults (Positional)
-Render(5); // Output: X:5, Color:blue, Size:10
+fn Main() {
+	// 1. Use defaults (Positional)
+	Render(5); // Output: X:5, Color:blue, Size:10
 
-// 2. Replace only one default (Named)
-Render(10, size: 20); // Output: X:10, Color:blue, Size:20
+	// 2. Replace only one default (Named)
+	Render(10, size: 20); // Output: X:10, Color:blue, Size:20
 
-// 3. Shuffle the Order (Named)
-Render(color: "red", x: 15, size: 30); // Output: X:15, Color:red, Size:30
+	// 3. Shuffle the Order (Named)
+	Render(color: "red", x: 15, size: 30); // Output: X:15, Color:red, Size:30
 }
 ```
 
@@ -422,16 +430,16 @@ A callback function is a function passed as an argument to another function.
 You can also pass functions that take parameters - just make sure the function pointer type matches:
 ```
 fn addNumbers(a:int , b:int ) {
-printf("The sum is: {a + b}");
+	printf("The sum is: {a + b}");
 }
 
 fn calculate((*callback)(int, int), x:int , y:int ) {
-callback(x, y);
+	callback(x, y);
 }
 
 int main() {
-calculate(addNumbers, 5, 3);
-return 0;
+	calculate(addNumbers, 5, 3);
+	return 0;
 }
 ```
 
@@ -442,8 +450,10 @@ This enables Coroutine-based concurrency in system programming and network opera
 
 5.5 Error Path: Using `Option<T>` and `Result<T, E>`.
 Error Path: Types representing the operation result:
+```
 `Option<T>`: Indicates whether the value is present or absent (null).
 `Result<T, E>`: Returns a success value (`T`) or an error value (`E`).
+```
 Instead of throwing an error, it forces an error-free path by embedding the result in the return type.
 ```
 Nim
@@ -451,10 +461,10 @@ Nim
 // Returns an int on success and a string on error.
 
 fn SafeDivide:any(a:int, b:int) {
-if (b == 0) {
-return (null, "Division by zero"); // Error path (Result: E)
-}
-return (a / b, null); // Success path (Result: T)
+	if (b == 0) {
+		return (null, "Division by zero"); // Error path (Result: E)
+	}
+	return (a / b, null); // Success path (Result: T)
 }
 
 echo(SafeDivide(9,0)); // Output: Division by zero
@@ -466,7 +476,7 @@ echo(SafeDivide(9,3)); // Output: 3
 This is a small function that asks the compiler to insert its code directly into the call location, rather than jumping directly into the code.
 ```
 inline fn square(x:int ):int {
-return x * x;
+	return x * x;
 }
 ```
 
@@ -479,16 +489,16 @@ Example
 ```
 
 fn factorial(n:int):int {
-if (n > 1){
-return n * factorial(n - 1);
-}else{
-return 1;
-}
+	if (n > 1){
+		return n * factorial(n - 1);
+	}else{
+		return 1;
+	}
 }
 
 int main() {
-echo("Factorial of 5 is {factorial(5)}");
-return 0;
+	echo("Factorial of 5 is {factorial(5)}");
+	return 0;
 }
 
 ```
@@ -529,7 +539,7 @@ You can also use pointers to access arrays.
 myNumbers[4]:int = {25, 50, 75, 100};
 
 for (i, i < 4, i++) {
-echo("\n{&myNumbers[i]}");
+	echo("\n{&myNumbers[i]}");
 }
 ```
 ```
@@ -583,7 +593,7 @@ A function pointer is like a regular pointer, but instead of pointing to a varia
 This means it stores the address of a function and allows you to call that function using the pointer.
 Function pointers allow you to decide which function to execute while the program is running, or when you want to pass a function as an argument to another function.
 They are useful for callbacks, menus, and flexible program design.
-
+```
 `(*pointerName):returnType (parameterType1, parameterType2, ...);`
 `(*ptr):int(i32...);`
 You can assign a function to a pointer in two ways:
@@ -595,18 +605,18 @@ Once the pointer is assigned, you can call the function in two ways:
 `ptr(5, 3);`
 `(*ptr)(5, 3);`
 Both are valid and perform the same function.
-
+```
 A pointer to a function that adds two numbers:
 ```
 add:int( a:int, b:int) {
-return a + b;
+	return a + b;
 }
 
 int main() {
-(*ptr):int(i32...) = add;
-result:int = ptr(5, 3);
-echo("Result: {result}");
-return 0;
+	(*ptr):int(i32...) = add;
+	result:int = ptr(5, 3);
+	echo("Result: {result}");
+	return 0;
 }
 ```
 Note: A function name, by itself, points to the beginning of its code in memory. So, a function name already acts like a pointer!
@@ -626,23 +636,23 @@ Unlike an array, a structure can contain many different data types (int, float, 
 ```
 // Create a structure called myStructure
 struct myStructure { // Structure name
-myNum:i32, //
-myLetter:char //
+	myNum:i32, //
+	myLetter:char //
 }
 
 int main() {
-// Create a structure variable of myStructure called s1
-myStructure => s1;
+	// Create a structure variable of myStructure called s1
+	myStructure => s1;
 
-// Assign values ​​to members of s1
-s1.myNum = 13;
-s1.myLetter = "B";
+	// Assign values ​​to members of s1
+	s1.myNum = 13;
+	s1.myLetter = "B";
 
-// echo values
-echo("My number: {s1.myNum}\n");
-echo("My letter: {s1.myLetter}");
+	// echo values
+	echo("My number: {s1.myNum}\n");
+	echo("My letter: {s1.myLetter}");
 
-return 0;
+	return 0;
 }
 ```
 A structure can also contain another structure as a member.
@@ -650,24 +660,24 @@ This is called a nested structure and is useful when you want to group related d
 ```
 // NIM type
 struct Owner {
-firstName:str[30],
-lastName:str[30]
+	firstName:str[30],
+	lastName:str[30]
 }
 
 struct Car {
-brand:str[30],
-year:i32,
-Owner => owner // Nested structure
+	brand:str[30],
+	year:i32,
+	Owner => owner // Nested structure
 }
 
 int main() {
-Owner => person = {"John", "Doe"};
-Car => car1 = {"Toyota", 2010, person};
+	Owner => person = {"John", "Doe"};
+	Car => car1 = {"Toyota", 2010, person};
 
-echo("Car: {car1.brand} : {car1.year}\n");
-echo("Owner: {car1.owner.firstName} {car1.owner.lastName}\n");
+	echo("Car: {car1.brand} : {car1.year}\n");
+	echo("Owner: {car1.owner.firstName} {car1.owner.lastName}\n");
 
-return 0;
+	return 0;
 }
 ```
 
@@ -676,34 +686,34 @@ return 0;
 ```
 // 1. struct definition
 struct Point {
-x: i32,
-y: i32
+	x: i32,
+	y: i32
 }
 
 // 2. 'Extend' block to define methods
 extend Point {
-// Constructor function
-fn new(x: i32, y: i32): Point {
-return { x: x, y: y }; // Return with the struct literal
+	// Constructor function
+	fn new(x: i32, y: i32): Point {
+	return { x: x, y: y }; // Return with the struct literal
 }
 
 // Immutable method (self: reference)
 fn get_x(self: ref): i32 {
-return self.x;
+	return self.x;
 }
 
 // Immutable method (self: ptr - pointer)
 fn move_to(self: ptr, new_x: i32, new_y: i32): void {
-self.x = new_x;
-self.y = new_y;
-}
+	self.x = new_x;
+	self.y = new_y;
+	}
 }
 
 // Usage:
 void fn Main() {
-var p1 = Point.new(10, 20); // Calls the constructor
-echo("X: {p1.get_x()}"); // Method call
-p1.move_to(50, 60); // Replaceable method call
+	var p1 = Point.new(10, 20); // Calls the constructor
+	echo("X: {p1.get_x()}"); // Method call
+	p1.move_to(50, 60); // Replaceable method call
 }
 ```
 
@@ -717,13 +727,13 @@ For example, instead of always writing float, to make the code more understandab
 typedef Temperature:f32;
 
 int main() {
-today:Temperature = 25.5;
-tomorrow:Temperature = 18.6;
+	today:Temperature = 25.5;
+	tomorrow:Temperature = 18.6;
 
-echo("Today: {today}C\n");
-echo("Tomorrow: {tomorrow}C\n");
+	echo("Today: {today}C\n");
+	echo("Tomorrow: {tomorrow}C\n");
 
-return 0;
+	return 0;
 }
 ```
 
@@ -732,9 +742,9 @@ An enum is a special type that represents a group of constants (immutable values
 To create an enum, use the enum keyword, followed by the enum name and separate the enum elements with commas:
 ```
 enum Level {
-LOW,
-MEDIUM,
-HIGH
+	LOW,
+	MEDIUM,
+	HIGH
 }
 ```
 Note that the comma is not needed in the last item.
@@ -744,12 +754,12 @@ By default, the first element ( LOW ) has a value of 0, the second element ( MED
 Now, if you try to print myVar, you will get output representing MEDIUM:
 ```
 int main() {
-// Create an enum variable and assign a value to it
-Level myVar = MEDIUM;
-// echo the enum variable
-echo(myVar);
+	// Create an enum variable and assign a value to it
+	Level myVar = MEDIUM;
+	// echo the enum variable
+	echo(myVar);
 
-return 0;
+	return 0;
 }
 ```
 
@@ -757,9 +767,9 @@ As you know, the first element of an enum has a value of 0. The second element h
 You can easily change the values ​​to better understand them:
 ```
 enum Level {
-LOW = 25,
-MEDIUM = 50,
-HIGH = 75
+	LOW = 25,
+	MEDIUM = 50,
+	HIGH = 75
 }
 
 echo(myVar); // Now outputs 50
@@ -768,9 +778,9 @@ echo(myVar); // Now outputs 50
 If you assign a value to a specific element, the numbers of subsequent elements are updated accordingly:
 ```
 enum Level {
-LOW = 5,
-MEDIUM, // Now 6
-HIGH // Now 7
+	LOW = 5,
+	MEDIUM, // Now 6
+	HIGH // Now 7
 }
 ```
 
@@ -913,7 +923,7 @@ export const PI = 3.14159;
 
 // Exported function
 export fn Add:i32(a:i32, b:i32) {
-return a + b;
+	return a + b;
 }
 ```
 9.3. Importing (`use`)
@@ -930,9 +940,9 @@ Nim
 
 use math; // The math module is imported.
 
-void fn Main() {
-var result = math.Add(5, 3); // The math. prefix is ​​required.
-echo("Result: {result}");
+fn Main() {
+	var result = math.Add(5, 3); // The math. prefix is ​​required.
+	echo("Result: {result}");
 }
 ```
 
@@ -951,10 +961,10 @@ Nim
 // Only the Add function and the PI constant are imported from the math module.
 use math { Add, PI }
 
-void fn Main() {
-var result = math.Add(10, 5);
-echo("Result: {result}");
-echo("PI Constant: {math.PI}");
+fn Main() {
+	var result = math.Add(10, 5);
+	echo("Result: {result}");
+	echo("PI Constant: {math.PI}");
 }
 ```
 
@@ -977,17 +987,17 @@ Grouping Within a Module: You group all HTTP-related operations into a group.
 
 :network; // Module name to use as prefix.
 export group HTTP(any...){ // Exporting group
-connect: { /* Connection code */ }
+	connect: { /* Connection code */ }
 
-export get_data: { /* ... */ } // Can also be exported from within the group, preferable to the entire group.
+	export get_data: { /* ... */ } // Can also be exported from within the group, preferable to the entire group.
 
-dc: { /* Close connection .... */ }
+	dc: { /* Close connection .... */ }
 
-def: { HTTP.connect(); echo("HTTP Group Started."); }
+	def: { HTTP.connect(); echo("HTTP Group Started."); }
 }
 
 export group SOCKET(any...){ // Exporting group
-connect: { /* Connection code */ }......
+	connect: { /* Connection code */ }......
 }
 ```
 
@@ -1000,14 +1010,14 @@ Nim
 use network; // import the entire network module
 
 void fn Main() {
-// Direct focus access to group and its tag
-network.HTTP.get_data();
+	// Direct focus access to group and its tag
+	network.HTTP.get_data();
 
-// if there is a single import within the group, not the entire group
-network.get_data(); // etc...
+	// if there is a single import within the group, not the entire group
+	network.get_data(); // etc...
 
-// Or you can call the default tag.
-network.HTTP();
+	// Or you can call the default tag.
+	network.HTTP();
 }
 ```
 
@@ -1034,16 +1044,16 @@ Syntax:
 ```
 Nim
 fast_exec: TEST{
-// Generates virtual registers. The compiler sets these registers first, based on code integrity.
-// The code in this block takes priority in register optimization.
-// Speed-critical algorithms (Sorting, Searching) are written here.
+	// Generates virtual registers. The compiler sets these registers first, based on code integrity.
+	// The code in this block takes priority in register optimization.
+	// Speed-critical algorithms (Sorting, Searching) are written here.
 
-cpu.set_reg(0, 0); // Initialize R0
+	cpu.set_reg(0, 0); // Initialize R0
 
-while (cpu.get_reg(0) < 10) {
-// ...
-cpu.set_reg(0, cpu.get_reg(0) + 1);
-}
+	while (cpu.get_reg(0) < 10) {
+		// ...
+		cpu.set_reg(0, cpu.get_reg(0) + 1);
+	}
 }
 ```
 
@@ -1072,12 +1082,12 @@ Nim
 var addition_result: i64;
 
 asm: ADDITION_CODE {
-// Move the value 5 to rax
-mov rax, 5
-// Add 10 to rax
-add rax, 10
-// Store the result from rax into the NIMBLE variable (see 19.1)
-mov %addition_result, rax
+	// Move the value 5 to rax
+	mov rax, 5
+	// Add 10 to rax
+	add rax, 10
+	// Store the result from rax into the NIMBLE variable (see 19.1)
+	mov %addition_result, rax
 }
 ```
 
@@ -1106,19 +1116,19 @@ Example: fast_exec Usage
 ```
 Nim
 
-void fn Calc() {
-// Apply aggressive optimization to this NIMBLE code
-fast_exec {
-var a = 10;
-var b = 20;
+fn Calc():void {
+	// Apply aggressive optimization to this NIMBLE code
+	fast_exec {
+		var a = 10;
+		var b = 20;
 
-// This asm block is already in the fast_exec scope.
-asm: CRITICAL_ADD { 
-mov rax, %a 
-add rax, %b 
-mov %total, rax 
-} 
-}
+		// This asm block is already in the fast_exec scope.
+		asm: CRITICAL_ADD { 
+			mov rax, %a 
+			add rax, %b 
+			mov %total, rax 
+		} 
+	}
 }
 
 ```
@@ -1144,7 +1154,7 @@ Provides functions and tools to interact directly with kernels, registers, and p
 1. Performance and Control Functions
 These functions allow the programmer to manipulate and query the CPU environment in which code is running.
 FunctionPurposeSyntax and Description
-
+```
 `reg_get()` Returns the current value of the specified register.
 `var rax_value = cpu.reg_get(RAX);` Note: Registers such as RAX, RBX, and RCX are defined as constants in the CPU module.
 
@@ -1159,18 +1169,18 @@ FunctionPurposeSyntax and Description
 
 `clflush()` Clears the data at the specified memory address from the CPU cache. It is critical for hardware synchronization.
 `cpu.clflush(ptr_adres);`
-
+```
 The cpu module is critical for the high-performance and low-level system programming goals of the NIMBLE language.
 The fast_exec and asm blocks in your document already address this area, so the module's function should be to more systematically define the behavior and capabilities of these blocks.
 
 2. Timing and Measurement Tools: Retrieves data directly from the CPU to measure the performance of critical code blocks.
-
+```
 `rdtsc()` Reads the value of the Timestamp Counter (RDTSC). Provides a very precise time measurement, but one that can be affected by frequency changes.
 `var t1 = cpu.rdtsc();`
 
 `get_freq()` Returns the current CPU operating frequency (in MHz).
 `var freq = cpu.get_freq();`
-
+```
 3. Assembly (ASM) Integration
 The `asm:TAG { ... }` construct, already present in the documentation, should be considered a natural extension of the cpu module.
 
@@ -1216,53 +1226,53 @@ The `file` module requires special types to manage operations:
 ```
 Nim
 
-void fn Main() {
-var fileResult = file.open("settings.cfg", file.READ);
+fn Main() {
+	var fileResult = file.open("settings.cfg", file.READ);
 
-// Using the match statement for error checking
-match fileResult {
-Ok(handle) => {
-var contentResult = file.read_all(handle);
+	// Using the match statement for error checking
+	match fileResult {
+		Ok(handle) => {
+			var contentResult = file.read_all(handle);
 
-match contentResult {
-Ok(content) => {
-print("File Content:\n{content}");
-},
-Err(error) => {
-print("Read Error: {error}");
-}
-}
-file.close(handle); // Close the file
-},
-Err(error) => {
-// File not found, access denied, etc.
-print("Error Opening File: {error}");
-}
-}
+			match contentResult {
+				Ok(content) => {
+					print("File Content:\n{content}");
+				},
+				Err(error) => {
+					print("Read Error: {error}");
+				}
+			}
+			file.close(handle); // Close the file
+		},
+		Err(error) => {
+			// File not found, access denied, etc.
+			print("Error Opening File: {error}");
+		}
+	}
 }
 ```
 
 ```
 Nim
 
-void fn WriteExample() {
-var fileResult = file.open("log.txt", file.WRITE);
+fn WriteExample() {
+	var fileResult = file.open("log.txt", file.WRITE);
 
-match fileResult {
-Ok(handle) => {
-var writeResult = file.write(handle, "This is the log message.\n");
+	match fileResult {
+		Ok(handle) => {
+			var writeResult = file.write(handle, "This is the log message.\n");
 
-if writeResult.is_ok() {
-print("Number of bytes written successfully: {writeResult.unwrap()}");
-} else {
-print("Write Error!");
-}
-file.close(handle);
-},
-Err(error) => {
-print("Error Opening File: {error}");
-}
-}
+			if writeResult.is_ok() {
+				print("Number of bytes written successfully: {writeResult.unwrap()}");
+			} else {
+				print("Write Error!");
+			}
+			file.close(handle);
+		},
+		Err(error) => {
+			print("Error Opening File: {error}");
+		}
+	}
 }
 ```
 
@@ -1314,28 +1324,28 @@ There is no need for a special `array.new()` function for dynamic arrays. The ar
 ```
 Nim
 
-void fn ArrayExample() {
-var numbers: i32[] = {10, 20, 30}; // Dynamic array initialization
+fn ArrayExample() {
+	var numbers: i32[] = {10, 20, 30}; // Dynamic array initialization
 
-// Adding elements with push
-numbers.push(40); // [10, 20, 30, 40]
+	// Adding elements with push
+	numbers.push(40); // [10, 20, 30, 40]
 
-print("Number of Elements: {numbers.count()}"); // 4
+	print("Number of Elements: {numbers.count()}"); // 4
 
-// Insert with add
-numbers.add(1, 15); // [10, 15, 20, 30, 40]
+	// Insert with add
+	numbers.add(1, 15); // [10, 15, 20, 30, 40]
 
-// Subtract with pop
-var lastElement = numbers.pop();
-if lastElement.is_ok(): {
-print("Removed: {lastElement.unwrap()}"); // 40
-}
+	// Subtract with pop
+	var lastElement = numbers.pop();
+	if lastElement.is_ok(): {
+		print("Removed: {lastElement.unwrap()}"); // 40
+	}
 
-// Search
-var index = numbers.find(20);
-if index.is_some(): {
-print("Index of 20: {index.unwrap()}"); // 2
-}
+	// Search
+	var index = numbers.find(20);
+	if index.is_some(): {
+		print("Index of 20: {index.unwrap()}"); // 2
+	}
 }
 
 ```
@@ -1380,30 +1390,30 @@ print("Index of 20: {index.unwrap()}"); // 2
 ```nim
 Nim
 
-void fn StringExample() {
-var text: str = "Hello World, NIMBLE is awesome!";
+fn StringExample():void {
+	var text: str = "Hello World, NIMBLE is awesome!";
 
-// Basics
-print("Length: {text.len()}"); // 28
+	// Basics
+	print("Length: {text.len()}"); // 28
 
-// Conversion
-var upper = text.to_upper();
-print("Capitalization: {upper}"); // HELLO WORLD, NIMBLE IS AWESOME!
+	// Conversion
+	var upper = text.to_upper();
+	print("Capitalization: {upper}"); // HELLO WORLD, NIMBLE IS AWESOME!
 
-// Search and Replace
-if text.contains("NIMBLE") {
-print("Found NIMBLE.");
-text = text.replace("wonderful", "excellent");
-print("New Text: {text}");
-}
+	// Search and Replace
+	if text.contains("NIMBLE") {
+		print("Found NIMBLE.");
+		text = text.replace("wonderful", "excellent");
+		print("New Text: {text}");
+	}
 
-// Splitting
-var words = text.split(" ");
-print("Word Count: {words.count()}"); // 4
+	// Splitting
+	var words = text.split(" ");
+	print("Word Count: {words.count()}"); // 4
 
-// Joining
-var newText = string.join(words, "_");
-print("Joined: {newText}"); // Hello_World,_NIMBLE_perfect!
+	// Joining
+	var newText = string.join(words, "_");
+	print("Joined: {newText}"); // Hello_World,_NIMBLE_perfect!
 }
 ```
 
@@ -1465,28 +1475,28 @@ All trigonometric functions accept input in **radians**.
 ```nim
 Nim
 
-void fn MathExample() {
-var radius: f64 = 5.0;
+fn MathExample() {
+	var radius: f64 = 5.0;
 
-// Constant Usage
-var area = math.PI * math.pow(radius, 2.0);
-print("Area: {area}"); // ?rn: 78.5398...
+	// Constant Usage
+	var area = math.PI * math.pow(radius, 2.0);
+	print("Area: {area}"); // ?rn: 78.5398...
 
-// Trigonometry
-var degrees: f64 = 45.0;
-var radians = math.deg_to_rad(degrees);
-var sin_value = math.sin(radian);
-print("Sin(45): {sin_value}"); // ?rn: 0.707...
+	// Trigonometry
+	var degrees: f64 = 45.0;
+	var radians = math.deg_to_rad(degrees);
+	var sin_value = math.sin(radian);
+	print("Sin(45): {sin_value}"); // ?rn: 0.707...
 
-// Square Root and Absolute Value
-var val1: f64 = math.sqrt(81.0); // 9.0
-var val2: f64 = math.abs(-15.5); // 15.5
-print("Square root: {val1}, Absolute: {val2}");
+	// Square Root and Absolute Value
+	var val1: f64 = math.sqrt(81.0); // 9.0
+	var val2: f64 = math.abs(-15.5); // 15.5
+	print("Square root: {val1}, Absolute: {val2}");
 
-// Rounding
-var sqrt: f64 = 4.7;
-print("Rounding (ceil): {math.ceil(sqrt)}"); // 5.0
-print("Rounding (floor): {math.floor(sqrt)}"); // 4.0
+	// Rounding
+	var sqrt: f64 = 4.7;
+	print("Rounding (ceil): {math.ceil(sqrt)}"); // 5.0
+	print("Rounding (floor): {math.floor(sqrt)}"); // 4.0
 }
 ```
 
@@ -1530,28 +1540,28 @@ Since `JsonValue` is a dynamic type, special validation methods (with method cha
 ```nim
 Nim
 
-void fn JsonExample() {
-var json_str: str = "{\"name\":\"NIMBLE\",\"version\":1.0,\"active\":true,\"list\":[10, 20]}";
+fn JsonExample() {
+	var json_str: str = "{\"name\":\"NIMBLE\",\"version\":1.0,\"active\":true,\"list\":[10, 20]}";
 
-var parseResult = json.parse(json_str);
+	var parseResult = json.parse(json_str);
 
-match parseResult {
-Ok(data) => {
-// Safe access to data
-var name = data.get("name").as_str().unwrap_or("?");
-var version = data.get("version").as_f64().unwrap_or(0.0);
+	match parseResult {
+		Ok(data) => {
+			// Safe access to data
+			var name = data.get("name").as_str().unwrap_or("?");
+			var version = data.get("version").as_f64().unwrap_or(0.0);
 
-print("Name: {name}"); // NIMBLE
-print("Version: {version}"); // 1.0
+			print("Name: {name}"); // NIMBLE
+			print("Version: {version}"); // 1.0
 
-// Accessing the array
-var first_number = data.get("list").at(0).as_i32().unwrap_or(-1);
-print("First number in list: {first_number}"); // 10
-},
-Err(error) => {
-print("JSON Parse Error: {error}");
-}
-}
+			// Accessing the array
+			var first_number = data.get("list").at(0).as_i32().unwrap_or(-1);
+			print("First number in list: {first_number}"); // 10
+		},
+		Err(error) => {
+			print("JSON Parse Error: {error}");
+		}
+	}
 }
 ```
 
@@ -1598,44 +1608,44 @@ The `Match` structure provides access to the result data when the match is succe
 ```nim
 Nim
 
-void fn RegexExample() {
-// Pattern: Username, @, domain (.extension)
-var email_pattern: str = "^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+)\\.([a-zA-Z]{2,})$";
-var test_email: str = "username@nimble.dev";
+fn RegexExample() {
+	// Pattern: Username, @, domain (.extension)
+	var email_pattern: str = "^([a-zA-Z0-9._%+-]+)@([a-zA-Z0-9.-]+)\\.([a-zA-Z]{2,})$";
+	var test_email: str = "username@nimble.dev";
 
-// 1. Compile the Pattern
-var regexResult = regex.compile(email_pattern);
+	// 1. Compile the Pattern
+	var regexResult = regex.compile(email_pattern);
 
-match regexResult {
-Ok(email_regex) => {
-// 2. Find a Match
-var matchOption = email_regex.find(test_email);
+	match regexResult {
+		Ok(email_regex) => {
+			// 2. Find a Match
+			var matchOption = email_regex.find(test_email);
 
-match matchOption {
-Some(match_data) => {
-print("Match Successful.");
-// Access Capture Groups
-var user = match_data.group(1);
-var domain = match_data.group(2);
+			match matchOption {
+				Some(match_data) => {
+					print("Match Successful.");
+					// Access Capture Groups
+					var user = match_data.group(1);
+					var domain = match_data.group(2);
 
-print("User Name: {user}"); // username
-print("Domain Name: {domain}"); // nimble
-},
-None => {
-print("Email format is incorrect.");
-}
-}
+					print("User Name: {user}"); // username
+					print("Domain Name: {domain}"); // nimble
+				},
+				None => {
+					print("Email format is incorrect.");
+				}
+			}
 
-// 3. Replacement
-var old_text: str = "Date 2024-01-01";
-var date_regex = regex.compile("[0-9]{4}-[0-9]{2}-[0-9]{2}").unwrap();
-var new_text = date_regex.replace(old_text, "NEW DATE");
-print("Changed: {new_text}"); // Date NEW DATE
-},
-Err(error) => {
-print("Pattern Compilation Error: {error}");
-}
-}
+			// 3. Replacement
+			var old_text: str = "Date 2024-01-01";
+			var date_regex = regex.compile("[0-9]{4}-[0-9]{2}-[0-9]{2}").unwrap();
+			var new_text = date_regex.replace(old_text, "NEW DATE");
+			print("Changed: {new_text}"); // Date NEW DATE
+		},
+		Err(error) => {
+			print("Pattern Compilation Error: {error}");
+		}
+	}
 }
 ```
 
@@ -1679,33 +1689,33 @@ Because standard I/O operations can also be interrupted, error types are defined
 ```nim
 Nim
 
-void fn ConsoleExample() {
-// 1. Receiving input from the user via a prompt
-var isimResult = io.prompt("Please enter your name: ");
+fn ConsoleExample() {
+	// 1. Receiving input from the user via a prompt
+	var isimResult = io.prompt("Please enter your name: ");
 
-match isimResult {
-Ok(name) => {
-io.println("Hello, {name}!");
+	match isimResult {
+		Ok(name) => {
+			io.println("Hello, {name}!");
 
-// 2. Receiving and converting numeric input
-var yasResult = io.prompt("Please enter your age: ");
+			// 2. Receiving and converting numeric input
+			var yasResult = io.prompt("Please enter your age: ");
 
-match yasResult {
-Ok(yas_str) => {
-// Converting a string to an integer
-// Assuming there is a parse function in NIMBLE's string module or in the basic language.
-var yas: i32 = string.to_i32(yas_str).unwrap_or(0);
-io.println("So, you are {yas} years old.");
-},
-Err(error) => {
-io.err_print("An error occurred while reading the input.");
-}
-}
-},
-Err(error) => {
-io.err_print("Could not read name.");
-}
-}
+			match yasResult {
+				Ok(yas_str) => {
+					// Converting a string to an integer
+					// Assuming there is a parse function in NIMBLE's string module or in the basic language.
+					var yas: i32 = string.to_i32(yas_str).unwrap_or(0);
+					io.println("So, you are {yas} years old.");
+				},
+				Err(error) => {
+					io.err_print("An error occurred while reading the input.");
+				}
+			}
+		},
+		Err(error) => {
+			io.err_print("Could not read name.");
+		}
+	}
 }
 ```
 
@@ -1755,34 +1765,34 @@ Error type for safe conversion functions:
 ```nim
 Nim
 
-void fn TypesExample() {
-var float_val: f64 = 123.45;
-var string_val: str = "42";
-var bad_string: str = "abc";
+fn TypesExample() {
+	var float_val: f64 = 123.45;
+	var string_val: str = "42";
+	var bad_string: str = "abc";
 
-// Safe Conversion (f64 -> i32)
-// Should be explicit due to the risk of data loss, but Result is unnecessary in this case.
-var int_val_safe: i32 = types.to_i32(float_val).as_type<i32>(); // 123
-print("Safe Conversion (int): {int_val_safe}");
+	// Safe Conversion (f64 -> i32)
+	// Should be explicit due to the risk of data loss, but Result is unnecessary in this case.
+	var int_val_safe: i32 = types.to_i32(float_val).as_type<i32>(); // 123
+	print("Safe Conversion (int): {int_val_safe}");
 
-// Safe String Parsing (str -> i32)
-var parseResult = types.parse<i32>(string_val);
-match parseResult {
-Ok(i) => { print("Successful parse: {i}"); }, // 42
-Err(e) => { print("Error: {e}"); }
-}
+	// Safe String Parsing (str -> i32)
+	var parseResult = types.parse<i32>(string_val);
+	match parseResult {
+		Ok(i) => { print("Successful parse: {i}"); }, // 42
+		Err(e) => { print("Error: {e}"); }
+	}
 
-// Failed String Parsing
-var badParse = types.parse<i32>(bad_string);
-if badParse.is_err() {
-print("Error: Could not convert 'abc' to a number.");
-}
+	// Failed String Parsing
+	var badParse = types.parse<i32>(bad_string);
+	if badParse.is_err() {
+		print("Error: Could not convert 'abc' to a number.");
+	}
 
-// Unsafe/Forced Conversion (Risk of data loss)
-var large_i32: i32 = 500;
-// Forced conversion from float_val to i32 (as_type) truncates the decimal.
-var forced_i32: i32 = float_val.as_type<i32>();
-print("Forced Conversion (truncating): {forced_i32}"); // 123
+	// Unsafe/Forced Conversion (Risk of data loss)
+	var large_i32: i32 = 500;
+	// Forced conversion from float_val to i32 (as_type) truncates the decimal.
+	var forced_i32: i32 = float_val.as_type<i32>();
+	print("Forced Conversion (truncating): {forced_i32}"); // 123
 }
 ```
 
@@ -1831,42 +1841,42 @@ Nim
 // It is assumed that there is a default function in the language to get the size of the i32 in memory.
 const I32_SIZE = types.sizeof:i32();
 
-void fn MemoryExample() {
-var size_bytes: size = 10 * I32_SIZE; // Space for 10 i32s
-var data_ptr: ptr;
+fn MemoryExample() {
+	var size_bytes: size = 10 * I32_SIZE; // Space for 10 i32s
+	var data_ptr: ptr;
 
-// 1. Memory Allocation
-var allocResult = memory.calloc(10, I32_SIZE);
+	// 1. Memory Allocation
+	var allocResult = memory.calloc(10, I32_SIZE);
 
-match allocResult {
-Ok(ptr_val) => {
-data_ptr = ptr_val;
+	match allocResult {
+		Ok(ptr_val) => {
+			data_ptr = ptr_val;
 
-// 2. Using Memory (Pointer Arithmetic and Unsafe Access)
-// Assign the value 42 to the first i32
-(data_ptr as *i32)[0] = 42;
+			// 2. Using Memory (Pointer Arithmetic and Unsafe Access)
+			// Assign the value 42 to the first i32
+			(data_ptr as *i32)[0] = 42;
 
-// 3. Resizing Memory (e.g., for 20 i32s)
-var reallocResult = memory.realloc(data_ptr, 20 * I32_SIZE);
+			// 3. Resizing Memory (e.g., for 20 i32s)
+			var reallocResult = memory.realloc(data_ptr, 20 * I32_SIZE);
 
-match reallocResult {
-Ok(new_ptr) => {
-data_ptr = new_ptr;
-print("Memory resized. Initial value: { (data_ptr as *i32)[0] }");
-},
-Err(e) => {
-print("Resizing failed: {e}");
-}
-}
-},
-Err(e) => {
-print("Memory allocation failed: {e}");
-}
-}
+			match reallocResult {
+				Ok(new_ptr) => {
+					data_ptr = new_ptr;
+					print("Memory resized. Initial value: { (data_ptr as *i32)[0] }");
+				},
+				Err(e) => {
+					print("Resizing failed: {e}");
+				}
+			}
+		},
+		Err(e) => {
+			print("Memory allocation failed: {e}");
+		}
+	}
 
-// 4. Freeing Memory (Absolutely necessary!)
-memory.free(data_ptr);
-print("Memory freed.");
+	// 4. Freeing Memory (Absolutely necessary!)
+	memory.free(data_ptr);
+	print("Memory freed.");
 }
 ```
 
@@ -1912,12 +1922,9 @@ Functions that will run on the GPU are defined with the special keyword `kernel`
 
 | Structure/Function | Purpose | Description |
 | :--- | :--- | :--- |
-| **`kernel fn`** | Declaration of a function that will run in parallel on the GPU.
-| Can only take `GpuArray` and basic types as parameters. |
-| **`launch()`** | Executes (starts) a compiled `Kernel` on the GPU. Grid/Block sizes are specified.
-| `fn launch(k: Kernel, grid_size: i32, block_size: i32, ...args): void` |
-| **`gpu.thread_id()`** | Returns the parallel index of the current thread within the running kernel.
-| Used within kernel functions. |
+| **`kernel fn`** | Declaration of a function that will run in parallel on the GPU.| Can only take `GpuArray` and basic types as parameters. |
+| **`launch()`** | Executes (starts) a compiled `Kernel` on the GPU. Grid/Block sizes are specified.| `fn launch(k: Kernel, grid_size: i32, block_size: i32, ...args): void` |
+| **`gpu.thread_id()`** | Returns the parallel index of the current thread within the running kernel.| Used within kernel functions. |
 
 ### 5. Example Usage: Adding Two Arrays
 
@@ -1926,50 +1933,50 @@ Nim
 
 // Kernel function to run in parallel on the GPU
 kernel fn add_arrays(a: GpuArray<i32>, b: GpuArray<i32>, result: GpuArray<i32>) {
-// Get the index of the current thread
-var i = gpu.thread_id();
+	// Get the index of the current thread
+	var i = gpu.thread_id();
 
-// Parallel operation: result[i] = a[i] + b[i]
-if i < a.count() {
-result[i] = a[i] + b[i];
+	// Parallel operation: result[i] = a[i] + b[i]
+	if i < a.count() {
+		result[i] = a[i] + b[i];
+	}
 }
-}
 
-void fn GpuExample() {
-var deviceResult = gpu.select_device(0); // Select first GPU 
+fn GpuExample() {
+	var deviceResult = gpu.select_device(0); // Select first GPU 
 
-match deviceResult { 
-Ok(dev) => { 
-var size = 1024; 
-var cpu_a: i32[] = array.new_filled(size, 1); 
-var cpu_b: i32[] = array.new_filled(size, 2); 
+		match deviceResult {
+		Ok(dev) => { 
+			var size = 1024; 
+			var cpu_a: i32[] = array.new_filled(size, 1); 
+			var cpu_b: i32[] = array.new_filled(size, 2); 
 
-// 1. Transfer data to GPU 
-var gpu_a = gpu.to_gpu(dev, cpu_a).unwrap(); 
-var gpu_b = gpu.to_gpu(dev, cpu_b).unwrap(); 
-var gpu_result = gpu.alloc_array<i32>(dev, size).unwrap(); 
+			// 1. Transfer data to GPU 
+			var gpu_a = gpu.to_gpu(dev, cpu_a).unwrap(); 
+			var gpu_b = gpu.to_gpu(dev, cpu_b).unwrap(); 
+			var gpu_result = gpu.alloc_array<i32>(dev, size).unwrap(); 
 
-// 2. Compile Kernel 
-var kernel = gpu.compile_kernel(add_arrays).unwrap(); 
+			// 2. Compile Kernel 
+			var kernel = gpu.compile_kernel(add_arrays).unwrap(); 
 
-// 3. Start the Kernel (e.g., 1024 threads)
-gpu.launch(kernel, size, 256, gpu_a, gpu_b, gpu_result);
+			// 3. Start the Kernel (e.g., 1024 threads)
+			gpu.launch(kernel, size, 256, gpu_a, gpu_b, gpu_result);
 
-// 4. Wait for the Process to Complete and Retrieve the Data
-gpu.sync(dev);
-var final_result = gpu.from_gpu(gpu_result).unwrap();
+			// 4. Wait for the Process to Complete and Retrieve the Data
+			gpu.sync(dev);
+			var final_result = gpu.from_gpu(gpu_result).unwrap();
 
-print("GPU Process Finished. First Element: {final_result[0]}"); // Should be 3
+			print("GPU Process Finished. First Element: {final_result[0]}"); // Should be 3
 
-// 5. Free the Memory (Very Important!)
-gpu.free_array(gpu_a);
-gpu.free_array(gpu_b);
-gpu.free_array(gpu_result);
-},
-Err(e) => {
-io.err_print("GPU device not found: {e}");
-}
-}
+			// 5. Free the Memory (Very Important!)
+			gpu.free_array(gpu_a);
+			gpu.free_array(gpu_b);
+			gpu.free_array(gpu_result);
+		},
+		Err(e) => {
+			io.err_print("GPU device not found: {e}");
+		}
+	}
 }
 ```
 
@@ -2014,39 +2021,39 @@ Basic structures representing sockets and addresses for network communication.
 ```nim
 Nim
 
-void fn TcpClientExample() {
-var server_addr = net.Address { ip: "127.0.0.1", port: 8080 };
+fn TcpClientExample() {
+	var server_addr = net.Address { ip: "127.0.0.1", port: 8080 };
 
-// 1. Connect to Server
-var connectResult = net.tcp_connect(server_addr);
+	// 1. Connect to Server
+	var connectResult = net.tcp_connect(server_addr);
 
-match connectResult {
-Ok(sock) => {
-io.println("Successfully connected to the server.");
+	match connectResult {
+		Ok(sock) => {
+			io.println("Successfully connected to the server.");
 
-// 2. Send Data
-var data_to_send: str = "Hello Server!";
-var sendResult = net.send(sock, data_to_send);
+			// 2. Send Data
+			var data_to_send: str = "Hello Server!";
+			var sendResult = net.send(sock, data_to_send);
 
-if sendResult.is_ok() {
-io.println("{sendResult.unwrap()} bytes sent.");
-}
+			if sendResult.is_ok() {
+				io.println("{sendResult.unwrap()} bytes sent.");
+			}
 
-// 3. Receive Data
-var recvResult = net.recv(sock, 1024); // Read a maximum of 1024 bytes
+			// 3. Receive Data
+			var recvResult = net.recv(sock, 1024); // Read a maximum of 1024 bytes
 
-if recvResult.is_ok() {
-io.println("Received from the server: {recvResult.unwrap()}");
-} else {
-io.err_print("Error receiving data.");
-}
+			if recvResult.is_ok() {
+				io.println("Received from the server: {recvResult.unwrap()}");
+			} else {
+				io.err_print("Error receiving data.");
+			}
 
-net.close(sock);
-},
-Err(e) => {
-io.err_print("Connection Error: {e}");
-}
-}
+			net.close(sock);
+		},
+		Err(e) => {
+			io.err_print("Connection Error: {e}");
+		}
+	}
 }
 ```
 
@@ -2054,106 +2061,73 @@ io.err_print("Connection Error: {e}");
 
 | Module Name | Description |
 | :--- | :--- |
-| **`time`** | **Time and Date Management.**
-Provides basic tools for interacting with the system clock, creating timestamps, calculating durations, and formatting date/time.
-|
+| **`time`** | **Time and Date Management.** Provides basic tools for interacting with the system clock, creating timestamps, calculating durations, and formatting date/time.|
 
 ### 1. Basic Structures and Types
 
 Time must be stored in different precision and formats.
 
 | Type Name | Purpose | Description |
-| :--- | :--- | :---
-|
-| **`Timestamp`** | A numeric value representing a specific moment, usually the number of seconds since the Unix Epoch (January 1, 1970).
-| Can be stored as `i64` or `f64`.
-|
-| **`DateTime`** | Structured date and time, divided into components such as year, month, day, hour, minute, second.
-| Used for formatting and arithmetic operations.
-|
-| **`Duration`** | A value representing the duration (difference) between two instants (usually in seconds or milliseconds).
-| Used for performance measurements and sleep times.
-|
+| :--- | :--- | :---|
+| **`Timestamp`** | A numeric value representing a specific moment, usually the number of seconds since the Unix Epoch (January 1, 1970).| Can be stored as `i64` or `f64`.|
+| **`DateTime`** | Structured date and time, divided into components such as year, month, day, hour, minute, second.| Used for formatting and arithmetic operations.|
+| **`Duration`** | A value representing the duration (difference) between two instants (usually in seconds or milliseconds).| Used for performance measurements and sleep times.|
 
 ### 2. Instantaneous Time Functions
 
 | Function | Purpose | Syntax | Description |
-| :--- | :--- | :--- | :---
-|
-| **`now()`** | Returns the timestamp (`Timestamp`) of the current instant. High precision.
-| `fn now(): Timestamp` |
-|
-| **`utc_now()`** | Returns the `DateTime` structure of the current instant in UTC (Universal Time Coordinate).
-| `fn utc_now(): DateTime` |
-|
-| **`local_now()`** | Returns the `DateTime` structure of the current moment according to the system's local time zone.
-| `fn local_now(): DateTime` |
-|
-| **`sleep()`** | Pauses thread execution for the specified amount of time (milliseconds).
-| `fn sleep(ms: i32): void`
-| Often found in the `thread` module, but presented here for basic latency.
-|
+| :--- | :--- | :--- | :---|
+| **`now()`** | Returns the timestamp (`Timestamp`) of the current instant. High precision.| `fn now(): Timestamp` ||
+| **`utc_now()`** | Returns the `DateTime` structure of the current instant in UTC (Universal Time Coordinate).| `fn utc_now(): DateTime` ||
+| **`local_now()`** | Returns the `DateTime` structure of the current moment according to the system's local time zone.| `fn local_now(): DateTime` ||
+| **`sleep()`** | Pauses thread execution for the specified amount of time (milliseconds).| `fn sleep(ms: i32): void`| Often found in the `thread` module, but presented here for basic latency.|
 
 ### 3. Conversion and Formatting Functions
 
 | Function | Purpose | Syntax | Description |
-| :--- | :--- | :--- | :---
-|
-| **`from_timestamp()`** | Converts a `Timestamp` value to a `DateTime` structure.
-| `fn from_timestamp(ts: Timestamp): DateTime` |
-|
-| **`format()`** | Converts a `DateTime` structure to a string (`str`) according to the specified format.
-| `fn format(dt: DateTime, format_str: str): str`
-| The format string follows standards such as `%Y-%m-%d %H:%M:%S`.
-|
-| **`parse()`** | Parses a string in the specified format into a `DateTime` structure.
-| `fn parse(time_str: str, format_str: str): Result<DateTime, TimeError>` |
-|
+| :--- | :--- | :--- | :---|
+| **`from_timestamp()`** | Converts a `Timestamp` value to a `DateTime` structure.| `fn from_timestamp(ts: Timestamp): DateTime` ||
+| **`format()`** | Converts a `DateTime` structure to a string (`str`) according to the specified format.| `fn format(dt: DateTime, format_str: str): str`| The format string follows standards such as `%Y-%m-%d %H:%M:%S`.|
+| **`parse()`** | Parses a string in the specified format into a `DateTime` structure.| `fn parse(time_str: str, format_str: str): Result<DateTime, TimeError>` ||
 
 ### 4. Time Measurement Functions
 
 | Function | Purpose | Syntax | Description |
 | :--- | :--- | :--- | :--- |
-| **`measure_start()`** | Starts the high-resolution timer (for time measurement).
-| `fn measure_start(): Timestamp` |
-|
-| **`measure_end()`** | Measures the duration starting with `measure_start()` and returns it as `Duration`.
-| `fn measure_end(start_time: Timestamp): Duration` |
-|
-| **`duration_ms()`** | Returns a `Duration` value in milliseconds as `f64`.
-| `fn duration_ms(d: Duration): f64` |
-|
+| **`measure_start()`** | Starts the high-resolution timer (for time measurement).| `fn measure_start(): Timestamp` ||
+| **`measure_end()`** | Measures the duration starting with `measure_start()` and returns it as `Duration`.| `fn measure_end(start_time: Timestamp): Duration` ||
+| **`duration_ms()`** | Returns a `Duration` value in milliseconds as `f64`.| `fn duration_ms(d: Duration): f64` ||
 
 ### 5. Example Usage: Duration Measurement and Formatting
 
 ```nim
 Nim
 
-void fn TimeExample() {
-// 1. Duration Measurement (Performance Test)
-var start_time = time.measure_start();
+fn TimeExample() {
+	// 1. Duration Measurement (Performance Test)
+	var start_time = time.measure_start();
 
-// Simulated Long Process
-var i: i32 = 0;
-while i < 10000000 {
-i = i + 1;
-}
+	// Simulated Long Process
+	var i: i32 = 0;
+	while i < 10000000 {
+		i = i + 1;
+	}
 
-var duration = time.measure_end(start_time);
-var duration_ms = time.duration_ms(duration);
-io.println("Processing duration: {time_ms} milliseconds.");
+	var duration = time.measure_end(start_time);
+	var duration_ms = time.duration_ms(duration);
+	io.println("Processing duration: {time_ms} milliseconds.");
 
-// 2. Current Time and Formatting
-var now_utc = time.utc_now();
+	// 2. Current Time and Formatting
+	var now_utc = time.utc_now();
 
-// Year-Month-Day Hour:Minute:Second format
-var formatted_time = time.format(now_utc, "%Y-%m-%d %H:%M:%S");
-io.println("UTC Time: {formatted_time}");
+	// Year-Month-Day Hour:Minute:Second format
+	var formatted_time = time.format(now_utc, "%Y-%m-%d %H:%M:%S");
+	io.println("UTC Time: {formatted_time}");
 
-// 3. Sleep
-io.println("Waiting for 200 ms...");
-time.sleep(200);
-io.println("Waiting is over.");
+	// 3. Sleep
+	io.println("Waiting for 200 ms...");
+	time.sleep(200);
+	io.println("Waiting is over.");
 }
 ```
 
@@ -2206,39 +2180,39 @@ Nim
 
 // To run this program: ./programim.nim --input data.txt
 
-void fn OsExample() {
-// 1. Accessing Command-Line Arguments
-var args = os.args();
-io.println("Program Name: {args[0]}");
+fn OsExample() {
+	// 1. Accessing Command-Line Arguments
+	var args = os.args();
+	io.println("Program Name: {args[0]}");
 
-if args.count() > 1 {
-io.println("First Argument: {args[1]}"); // --input
-}
+	if args.count() > 1 {
+		io.println("First Argument: {args[1]}"); // --input
+	}
 
-// 2. Accessing Environment Variables
-var userEnv = os.get_env("USER");
-match userEnv {
-Some(user) => {
-io.println("User: {user}");
-},
-None => {
-io.err_print("USER environment variable not found.");
-}
-}
+	// 2. Accessing Environment Variables
+	var userEnv = os.get_env("USER");
+	match userEnv {
+		Some(user) => {
+			io.println("User: {user}");
+		},
+		None => {
+			io.err_print("USER environment variable not found.");
+		}
+	}
 
-// 3. Executing External Commands
-var exitCodeResult = os.execute("ls", {"-l"}); // For Unix/Linux
-// Or os.execute("cmd", {"/c", "dir"}); // For Windows
+	// 3. Executing External Commands
+	var exitCodeResult = os.execute("ls", {"-l"}); // For Unix/Linux
+	// Or os.execute("cmd", {"/c", "dir"}); // For Windows
 
-if exitCodeResult.is_ok() && exitCodeResult.unwrap() == 0 {
-io.println("The directory listing command ran successfully.");
-}
+	if exitCodeResult.is_ok() && exitCodeResult.unwrap() == 0 {
+		io.println("The directory listing command ran successfully.");
+	}
 
-// 4. Creating a Directory
-var newDir = "test_data";
-if os.mkdir(newDir).is_ok() {
-io.println("The directory '{newDir}' was created.");
-}
+	// 4. Creating a Directory
+	var newDir = "test_data";
+	if os.mkdir(newDir).is_ok() {
+		io.println("The directory '{newDir}' was created.");
+	}
 }
 
 ```
@@ -2285,34 +2259,34 @@ These functions log messages according to their severity level.
 ```nim
 Nim
 
-void fn LogExample() {
-// 1. Configuring the Default Logger
-log.set_level(log.INFO);
-log.set_format("[{time} - {level}] {message}");
+fn LogExample():void {
+	// 1. Configuring the Default Logger
+	log.set_level(log.INFO);
+	log.set_format("[{time} - {level}] {message}");
 
-// Console Output
-log.info("Starting application successfully...");
+	// Console Output
+	log.info("Starting application successfully...");
 
-// Output: [2025-11-08 02:11:00 - INFO] Starting application successfully...
+	// Output: [2025-11-08 02:11:00 - INFO] Starting application successfully...
 
-// The DEBUG message is ignored because it is lower than the set level.
-log.debug("Database connection attempt.");
+	// The DEBUG message is ignored because it is lower than the set level.
+	log.debug("Database connection attempt.");
 
-// 2. Creating a Custom Logger (Logging to File)
-var fileTarget = log.Target { type: log.TARGET_FILE, path: "app.log" };
-var fileLogger = log.new(fileTarget);
-fileLogger.set_level(log.DEBUG); // Log everything to a file
+	// 2. Creating a Custom Logger (Logging to File)
+	var fileTarget = log.Target { type: log.TARGET_FILE, path: "app.log" };
+	var fileLogger = log.new(fileTarget);
+	fileLogger.set_level(log.DEBUG); // Log everything to a file
 
-// 3. Using a Custom Logger
-if some_condition.is_false() {
-var error_message: str = "Configuration file missing.";
+	// 3. Using a Custom Logger
+	if some_condition.is_false() {
+		var error_message: str = "Configuration file missing.";
 
-log.warn(error_message); // Writes WARN to the console
-fileLogger.error(error_message); // Writes ERROR to the file
-}
+		log.warn(error_message); // Writes WARN to the console
+		fileLogger.error(error_message); // Writes ERROR to the file
+	}
 
-// Critical Error
-log.fatal("Could not allocate memory. Terminating program.");
+	// Critical Error
+	log.fatal("Could not allocate memory. Terminating program.");
 }
 ```
 
@@ -2359,31 +2333,31 @@ Generating functions must be callable on both `Rng` and `SecureRng`.
 ```nim
 Nim
 
-void fn RandExample() {
-// 1. Standard RNG (Simulation/Game)
-var fast_rng = rand.new_rng();
+fn RandExample():void {
+	// 1. Standard RNG (Simulation/Game)
+	var fast_rng = rand.new_rng();
 
-// Generate random numbers from 1 to 100 (excluding 100)
-var dice_horse = fast_rng.range_i32(1, 100);
-io.println("Random Number: {dice_horse}");
+	// Generate random numbers from 1 to 100 (excluding 100)
+	var dice_horse = fast_rng.range_i32(1, 100);
+	io.println("Random Number: {dice_horse}");
 
-// Floating-point generation
-var rate = fast_rng.f64();
-io.println("Floating Rate: {rate}");
+	// Floating-point generation
+	var rate = fast_rng.f64();
+	io.println("Floating Rate: {rate}");
 
-// Select from array
-var names: str[] = {"Ali", "Veli", "Ayşe", "Fatma"};
-var lucky_name = fast_rng.choice(names);
-io.println("Lucky Name: {lucky_name}");
+	// Select from array
+	var names: str[] = {"Ali", "Veli", "Ayşe", "Fatma"};
+	var lucky_name = fast_rng.choice(names);
+	io.println("Lucky Name: {lucky_name}");
 
-// 2. Secure RNG (Cryptographic)
-var secure_rng = rand.new_secure();
+	// 2. Secure RNG (Cryptographic)
+	var secure_rng = rand.new_secure();
 
-// Generates a 32-byte secure key
-var key_bytes = secure_rng.bytes(32);
-io.println("Length of Generated Secure Key: {key_bytes.count()}");
+	// Generates a 32-byte secure key
+	var key_bytes = secure_rng.bytes(32);
+	io.println("Length of Generated Secure Key: {key_bytes.count()}");
 
-// The key is usually processed as a byte array, not a string.
+	// The key is usually processed as a byte array, not a string.
 }
 ```
 
@@ -2439,41 +2413,41 @@ Public and private key pairs are used.
 ```nim
 Nim
 
-void fn CryptoExample() {
-var password = "my_secret_password";
-var data: u8[] = string.to_bytes("Secret message."); // Converting data to a byte array
+fn CryptoExample():void {
+	var password = "my_secret_password";
+	var data: u8[] = string.to_bytes("Secret message."); // Converting data to a byte array
 
-// 1. Hashing (Data Integrity)
-var hash_digest = crypto.hash(crypto.SHA256, data);
-io.println("SHA-256 Digest: {hash_digest.to_hex()}");
+	// 1. Hashing (Data Integrity)
+	var hash_digest = crypto.hash(crypto.SHA256, data);
+	io.println("SHA-256 Digest: {hash_digest.to_hex()}");
 
-// 2. Password Security (PBKDF2)
-var salt = rand.new_secure().bytes(16); // Secure, random salt
-var derived_key = crypto.pbkdf2(password, salt, 100000, 32);
-io.println("Derived Key (32 bytes): {derived_key.count()}");
+	// 2. Password Security (PBKDF2)
+	var salt = rand.new_secure().bytes(16); // Secure, random salt
+	var derived_key = crypto.pbkdf2(password, salt, 100000, 32);
+	io.println("Derived Key (32 bytes): {derived_key.count()}");
 
-// 3. Symmetric Encryption (AES-256)
-var aes_key = crypto.generate_key(crypto.AES256);
-var iv = rand.new_secure().bytes(16); // Unique IV
+	// 3. Symmetric Encryption (AES-256)
+	var aes_key = crypto.generate_key(crypto.AES256);
+	var iv = rand.new_secure().bytes(16); // Unique IV
 
-// Encryption
-var cipher_result = crypto.encrypt_aes(aes_key, iv, data);
+	// Encryption
+	var cipher_result = crypto.encrypt_aes(aes_key, iv, data);
 
-match cipher_result {
-Ok(encrypted) => {
-io.println("Encrypted Data Length: {encrypted.count()}");
+	match cipher_result {
+		Ok(encrypted) => {
+			io.println("Encrypted Data Length: {encrypted.count()}");
 
-// Decryption 
-var decrypt_result = crypto.decrypt_aes(aes_key, iv, encrypted); 
-if decrypt_result.is_ok() { 
-var decrypted_data = decrypt_result.unwrap(); 
-io.println("Decrypted Message: {string.from_bytes(decrypted_data)}"); 
-} 
-}, 
-Err(e) => { 
-io.err_print("Encryption Error: {e}"); 
-} 
-}
+			// Decryption 
+			var decrypt_result = crypto.decrypt_aes(aes_key, iv, encrypted); 
+			if decrypt_result.is_ok() { 
+				var decrypted_data = decrypt_result.unwrap(); 
+				io.println("Decrypted Message: {string.from_bytes(decrypted_data)}"); 
+			} 
+		}, 
+		Err(e) => { 
+			io.err_print("Encryption Error: {e}"); 
+		} 
+	}
 }
 ```
 
@@ -2497,7 +2471,7 @@ The most flexible structure. Keys and values ​​can be of mixed types.
 
 2. Basic Functions and Usage The map module provides the following basic functions for managing the map structure:
 Function Purpose Syntax and Description
-
+```
 `new()` Creates a new, empty map instance.
 
 `var user_data = map.new();`
@@ -2505,8 +2479,10 @@ Function Purpose Syntax and Description
 `set()` Adds a new key-value pair to the map or updates an existing one.
 
 ```
+```
 user_data.set["name", "Alp"];
 user_data.set[1001, "ID");
+```
 ```
 `get()` Returns the value corresponding to the given key. If the key is not found, it returns `null` or can optionally return `Result<V, Error>`.
 `var name = user_data["name"];`
@@ -2528,7 +2504,7 @@ user_data.set[1001, "ID");
 
 `values()`Returns an `array<ValueTip>` containing all the values ​​in the map.
 `var values ​​= user_data.values();`
-
+```
 3. Easy Access Syntax
 
 Easy Syntax
@@ -2567,14 +2543,14 @@ Nim
 var fileResult = file.open("config.ini", file.READ);
 
 match fileResult {
-Ok(handle) => {
-// Success: Continue processing
-...
-},
-Err(error) => {
-// Error: Take action specific to the error type
-io.err_print("File Error: {error}");
-}
+	Ok(handle) => {
+		// Success: Continue processing
+		...
+	},
+	Err(error) => {
+		// Error: Take action specific to the error type
+		io.err_print("File Error: {error}");
+	}
 }
 
 // Safe Unwrapping: Return default if no value
@@ -2601,15 +2577,115 @@ try_catch,An optional block for catching critical exceptions.,try { ... } catch 
 ```
 Nim
 
-void fn process_data(data: i32[]) {
-if data.is_empty() {
-// Attempting to process an empty array requires a panic.
-panic("process_data: The input array cannot be empty.");
-}
-// ...
+fn process_data(data: i32[]) {
+	if data.is_empty() {
+		// Attempting to process an empty array requires a panic.
+		panic("process_data: The input array cannot be empty.");
+	}
+	// ...
 }
 ```
 
+## SECTION 14.0: Preprocessor and Compilation Directives
+
+NIMBLE uses a series of directives to influence the compilation phase of code, including or excluding platform-specific code fragments, and issuing special instructions to the compiler. These directives typically begin with the **`#`** symbol and are processed during the pre-compilation phase.
+
+### 1. Conditional Compilation Directives
+
+These directives cause code to be compiled under certain conditions.
+
+| Directive | Purpose | Syntax | Description |
+| :--- | :--- | :--- | :--- |
+| **`#ifdef`** | Compiles code if the specified symbol is defined. | `#ifdef <SYMBO L>` | Checks for the existence of a symbol such as `#define DEBUG`. |
+| **`#ifndef`** | Compiles code if the specified symbol is not defined. | `#ifndef <SYMBOL L>` | |
+| **`#if`** | Compiles the code if the specified condition (compile-time expression) is true. | `#if <condition>` | The condition can contain constant expressions, `const` values, or defined symbols. |
+| **`#elif`** | Checks for a new condition if the previous `#if` fails. | `#elif <condition>` | |
+| **`#else`** | Compiles the code if the previous conditions fail. | `#else` | |
+| **`#endif`** | Ends the conditional compilation block. | `#endif` | |
+
+**Example: Platform-Specific Code and the DEBUG Flag**
+
+```nim
+Nim
+
+#ifdef WINDOWS
+io.println("Windows-specific code is running.");
+#elif LINUX
+io.println("Linux-specific code is running.");
+#endif
+
+#ifdef DEBUG
+log.debug("Debug mode is active.");
+#endif
+```
+2. Preprocessor Macros and Text Substitution
+The #define directive is used for simple text substitution and parameterized macros.
+This process occurs before code analysis and compilation.
+
+2.1 Fixed Macros and Text Substitution
+```
+Directive, Purpose, Description
+#define <NAME> <VALUE>,
+"Ensures that all occurrences of the <NAME> symbol are replaced with <VALUE> at compile time.",```
+
+Example: Code Fragment Substitution
+```
+Nim
+```
+#define APPLICATION_NAME "NIMBLE v1.0"
+#define ERROR_CLOSURE io.err_print("Error! Closing."); os.exit(1);
+
+void fn Main() {
+io.println(APPLICATION_NAME);
+// ...
+ERROR_CLOSURE // Two lines of code are placed here.
+}
+```
+
+2.2 Parameterized Macros
+Enables a macro to perform more dynamic text substitution by taking arguments.
+
+Syntax, Purpose
+```
+"#define <AD>(<arg1>, ...)", A macro that generates a code fragment using arguments.
+```
+Example: Parameterized Macro
+```
+Nim
+
+// The macro directly replaces the arguments with text.
+#define MIN(a, b) ( (a) < (b) ? (a) : (b) )
+
+void fn MacroExample() {
+var x = 10;
+var y = 20;
+
+// Before compilation: ( (x) < (y) ? (x) : (y) )
+var small = MIN(x, y);
+}
+```
+
+3. File Inclusion and Streaming Directives
+```
+Directive, Purpose, Syntax, Description
+#include,"Includes (Copy/Paste) the contents of the specified file at the location of the directive during compilation.",
+"#include ""title.nim""",Used at a low level instead of using (logical module inclusion).
+#undef,Undefines a previously defined symbol.,
+#undef <SYMBO L>,
+```
+
+4. Error and Optimization Directives
+```
+Directive, Purpose, Syntax, Description
+#error,Stops the compilation process and displays the specified message as an error.,
+"#error ""<message>""",
+#warning,"Does not stop the compilation process, but displays a warning.",
+"#warning ""<message>""",
+#optimize,Controls compiler optimizations at the function or block level.,
+#optimize speed,
+#inline,"Instructs the compiler to attempt to inline a function where it is called.",
+#inline fn my_func() { ... },
+```
 
 ## SECTION 15.0: The Concept and Application of Generics
 
@@ -2632,21 +2708,21 @@ Nim
 
 // Generic function that swaps two values ​​of type T.
 fn swap<T>(a: *T, b: *T): void {
-var temp: T = *a; // read the value of a
-*a = *b; // write the value of b to a
-*b = temp; // write the value of temp to b
+	var temp: T = *a; // read the value of a
+	*a = *b; // write the value of b to a
+	*b = temp; // write the value of temp to b
 }
 
-void fn GenericSwapExample() {
-var x: i32 = 10;
-var y: i32 = 20;
+fn GenericSwapExample():void {
+	var x: i32 = 10;
+	var y: i32 = 20;
 
-swap<i32>(&x, &y); // compiled for type i32
+	swap<i32>(&x, &y); // compiled for type i32
 
-var s1: str = "A";
-var s2: str = "B";
+	var s1: str = "A";
+	var s2: str = "B";
 
-swap<str>(&s1, &s2); // compiled for type str
+	swap<str>(&s1, &s2); // compiled for type str
 }
 ```
 
@@ -2666,44 +2742,44 @@ Strict rules define how members in `group` and `struct` are exposed to the outsi
 
 **Example: Encapsulation**
 
-````nim
+```nim
 Nim
 
 // User Data Module
 export group UserModule {
 
-// The name field is accessible because it is pub, and the id field is private.
-pub struct User {
-pub name: str,
-id: i32 // Default: Accessible only within the UserModule.
-}
+	// The name field is accessible because it is pub, and the id field is private.
+	pub struct User {
+		pub name: str,
+		id: i32 // Default: Accessible only within the UserModule.
+	}
 
-// Factory function: Creates a new user
-pub fn create_user(name: str): User {
-// The id field can be set here because we are in a group.
-return User { name: name, id: 12345 };
-}
+	// Factory function: Creates a new user
+	pub fn create_user(name: str): User {
+		// The id field can be set here because we are in a group.
+		return User { name: name, id: 12345 };
+	}
 
-// Private helper function
-fn generate_id(): i32 {
-return 999;
-}
+	// Private helper function
+	fn generate_id(): i32 {
+		return 999;
+	}
 }
 
 // Using Another Module:
 use UserModule;
 
-void fn TestAccess() {
-var u = UserModule.create_user("Bob");
+fn TestAccess():void {
+	var u = UserModule.create_user("Bob");
 
-// Success: name pub
-io.println("Name: {u.name}");
+	// Success: name pub
+	io.println("Name: {u.name}");
 
-// ERROR: id private
-// io.println("ID: {u.id}"); // COMPILATION ERROR
+	// ERROR: id private
+	// io.println("ID: {u.id}"); // COMPILATION ERROR
 
-// ERROR: generate_id private
-// UserModule.generate_id(); // COMPILATION ERROR
+	// ERROR: generate_id private
+	// UserModule.generate_id(); // COMPILATION ERROR
 }
 
 ```
@@ -2721,29 +2797,29 @@ Example: Methods (group within a struct)
 Nim
 
 export struct Vector3 {
-pub x: f32,
-pub y: f32,
-pub z: f32,
+	pub x: f32,
+	pub y: f32,
+	pub z: f32,
 
-// group contains the methods of the Vector3 structure.
-pub group Methods {
-// Methods take the 'self' parameter.
-pub fn length(self: Vector3): f32 {
-// Requires access to the math module.
-return math.sqrt(self.x*self.x + self.y*self.y + self.z*self.z);
-}
-}
+	// group contains the methods of the Vector3 structure.
+	pub group Methods {
+		// Methods take the 'self' parameter.
+		pub fn length(self: Vector3): f32 {
+			// Requires access to the math module.
+			return math.sqrt(self.x*self.x + self.y*self.y + self.z*self.z);
+		}
+	}
 }
 
 // Usage:
 use Vector3;
 
-void fn VectorExample() {
-var vec = Vector3 { x: 1.0, y: 2.0, z: 3.0 };
+fn VectorExample() {
+	var vec = Vector3 { x: 1.0, y: 2.0, z: 3.0 };
 
-// Methods are called via group.
-var len = vec.Methods.length();
-io.println("Vector length: {len}");
+	// Methods are called via group.
+	var len = vec.Methods.length();
+	io.println("Vector length: {len}");
 }
 ```
 
@@ -2775,22 +2851,22 @@ Nim
 #[link(name="m")]
 export group C_Math {
 
-// We declare the C function double sqrt(double x) with extern.
-// In NIMBLE, f64 corresponds to the C double.
-extern pub fn sqrt(x: f64): f64;
+	// We declare the C function double sqrt(double x) with extern.
+	// In NIMBLE, f64 corresponds to the C double.
+	extern pub fn sqrt(x: f64): f64;
 
-// extern pub fn sin(x: f64): f64;
+	// extern pub fn sin(x: f64): f64;
 }
 
 // Usage
 use C_Math;
 
-void fn FFIExample() {
-var sqrt: f64 = 16.0;
+fn FFIExample() {
+	var sqrt: f64 = 16.0;
 
-// The call is directed to the function in the C library.
-var coq = C_Math.sqrt(sqrt);
-io.println("Square root: {coq}"); // Output: 4.0
+	// The call is directed to the function in the C library.
+	var coq = C_Math.sqrt(sqrt);
+	io.println("Square root: {coq}"); // Output: 4.0
 }
 
 ```
@@ -2815,7 +2891,7 @@ Nim
 
 // May be required for pointer arithmetic or manual memory operations.
 unsafe {
-var ptr = C_Memory.malloc(1024);
-// ...
+	var ptr = C_Memory.malloc(1024);
+	// ...
 }
 ```
