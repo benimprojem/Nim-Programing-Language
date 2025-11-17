@@ -1,25 +1,32 @@
 NIM (NIMBLE) PROGRAMMING LANGUAGE
 
-CHAPTER 1: INTRODUCTION AND FUNDAMENTALS
+## SECTION  1: INTRODUCTION AND FUNDAMENTALS
 ----------------------------------------------------------------------------
+
 Version: 1.0 (Runtime and Generics Supported, Consistent Syntax)
 Philosophy: Procedural, Functional, Modular, Safe Control.
 
-1.1 BASIC SYNTAX
+### 1.1 BASIC SYNTAX
 NIM adopts C-style syntax.
 ```
-Comments: Single: `// single-line comment`. 
-Multiple: `/* multi-line comment */`
+Comments: Single: 
+`// single-line comment`. 
+
+Multiple: 
+`/* multi-line comment */`
+
 All blocks are defined with `{}`, 
-and statements are terminated with a semicolon (`;`).
+
+and statements are terminated with a semicolon (`;`)
+
 ```
-1.2 VARIABLES
+### 1.2 VARIABLES
 General rules for naming variables are as follows:
 Names can contain letters, numbers, and underscores.
 Names must begin with a letter or an underscore (_).
 Names are case-sensitive (myVar and myvar are different variables).
 Names cannot contain spaces or special characters such as !, #, %, etc.
-Reserved words (e.g., int, arr, char) cannot be used as names.
+Reserved words (e.g., i32, arr, char) cannot be used as names.
 
 def variableName:type = value;
 
@@ -40,7 +47,7 @@ var name:str = "NIM Language";
 var ver:str = "ver: 0.1.5";
 
 // Constant definition
-const PI_VALUE:f64 = 3.14159;
+const PI_VALUE:f64 = 3.14159265358979;
 
 // Multivariable definition
 x,y,z:i32; // definition
@@ -49,10 +56,12 @@ x = 5, y = 6, z = 50; // assignment
 (x = 5, y = 6, z = 50):i32; // definition and assignment
 
 // Decimal separation
-const PI:f32[4] = 3.14159;
+const PI:f32[4] = 3.14159265358979;
+
 // PI = 3.1415 / takes 4 digits after the decimal separation,
 // if it is less than 4, it adds 0.
-// example a:f32[4] = 1.25; // a = 1.2500.
+// example: 
+a:f32[4] = 1.25; // a = 1.2500.
 
 // Tuple definition
 position:(i32, i32) = (100, 250); // Two variables of type i32
@@ -61,44 +70,53 @@ position:(i32...) = (100, 250); // Multiple variables of type i32
 
 // any: Single or multiple variables of any type.
 
-post:any = ("ok", 200); // variable of any type (e.g.: int, arr, str, char, ptr)
+post:any = "ok"; // or = 200; // variable of any type (e.g.: i32, arr, str, char, ptr)
 
 ```
 
-CHAPTER 2: DATA TYPES
+## SECTION  2: DATA TYPES
 ----------------------------------------------------------------------------
 
-2.1 Basic and Special Types
+### 2.1 Basic and Special Types
 ```
-Numeric: `i8`, `i16`, `i32`, `i64`, `i128`, `f32`, `f64`, `f128`
-`u8`, `u16`, `u32`, `u64`, `u128`
+Numeric: 
+`i8`, `i16`, `i32`, `i64`, `i128`, // Integer
+			 `f32`, `f64`, `f128`  // Float
+`u8`, `u16`, `u32`, `u64`, `u128`  // Unsigned Integer 
+			 `d32`, `d64`, `d128`  // Decimal
 
-`int` = `i32`
-`float` = `f32`
-`void` = fn no return.
-`bool` = `true` or `false`
-`char` = 1 character `char[8]` 8 characters
-`bit` = 1bit `bit[16]` 16 bits
-`byte` = 8bit `byte[4]` 4 bytes
-`null` = Null / Failed functions return null.
-`ptr` = pointer pointer
-`ref` = reference
-`[]` = array `cars[];`, `cars:arr;` defines an empty array.
-`arr` = array `cars:arr = ("Volvo", "BMW", "Toyota"); cars[0]; // Volvo`
-`arr` = Generic Array. `cars:arr;` represents a generic array type.
-`[]` = Dynamic Array. `cars[];` defines an empty, dynamic array.
 
-`str` = Text: `str` (Default UTF-8). Absolute encoding: `var msg:str[utf16] = "Data";`
-`str[30];` All str "strings" in the block are limited to 30 characters.
 
-`...` = Variable Number of Parameters Declaration (Homogeneous Type).
+`void` 	= fn no return.
+`bool`	= `true` or `false`
+`char`	= 1 character `char[8]` 8 characters
+`bit` 	= 1bit `bit[16]` 16 bits
+`byte` 	= 8bit `byte[4]` 4 bytes
+`hex`	= hex 0..F  a:hex = 54a2edf5b4b15aff; 
+`dec`	= Decimal d32,d64,d128
+`null` 	= Null / Failed functions return null.
+`ptr` 	= pointer (*) pointer
+`ref` 	= reference (&)
+`mut` 	= makes an immutable variable mutable. Example: mut PI:f32 = 3.14;
+`[]` 	= array `cars[];`, defines an empty array.
+			`[]` Dynamic Array. `cars[];` defines an empty, dynamic array.
+`arr` 	= array `cars:arr = ("Volvo", "BMW", "Toyota"); cars[0]; // Volvo`
+			`arr` Generic Array. `cars:arr;` represents a generic array type.
+`str` 	= Text: `str` (Default UTF-8). Absolute encoding: `var msg:str[utf16] = "Data";`
+			`str[30];` All str "strings" in the block are limited to 30 characters.
+`any` 	= Variable/Mixed Type (Heterogeneous). `str` can be any one of `i32`, `float`, `arr`, etc., or multiple mixed types.
+			When used as a Multiple Return Type, `(return myret:any(a:i32, b:str);)` returns values ​​from different types together and 
+			can be accessed as an array (`myret[0]` returns i32)
+`.` 	= Members Access  Example: Group  Taskgroup.sub_group.square(3); // calls the subgroup block.
+			or struct member car1.owner.firstName
+`..` 	= Range Example: (a..z), (A..Z), (0..9), (0..9999)
+`...` 	= Variable Number of Parameters Declaration (Homogeneous Type).
+			The `add(a:i32...)` syntax tells the function to pass only a variable number of parameters `(a[0], a[1],...)` of type `i32`.
 
-The `add(a:i32...)` syntax tells the function to pass only a variable number of parameters `(a[0], a[1],...)` of type `i32`.
-
-`any` = Variable/Mixed Type (Heterogeneous). `str` can be any one of `int`, `float`, `arr`, etc., or multiple mixed types.
-When used as a Multiple Return Type, `(return myret:any(a:i32, b:str);)` returns values ​​from different types together and can be accessed as an array (`myret[0]` returns i32).
 ```
-2.2 The bit width of basic types is strict. Explicit Casting is mandatory to prevent data loss.
+
+
+### 2.2 The bit width of basic types is strict. Explicit Casting is mandatory to prevent data loss.
 
 ```
 Nim
@@ -113,10 +131,10 @@ var ptr_data:ptr = null;
 ```
 
 
-2.3 Numbers: This supports the use of the letter (e or E) to indicate "10 to the power of 10."
+### 2.3 Numbers: This supports the use of the letter (e or E) to indicate "10 to the power of 10."
 `35000 = 35e3`
 
-2.4 Type Conversion: Explicit Casting rule.
+### 2.4 Type Conversion: Explicit Casting rule.
 The `types` module contains conversion methods for all number types.
 ```
 // Type Conversion
@@ -126,10 +144,11 @@ small_num:i32 = to_i32(large_num); // Converts to i32. The to_i32() function per
 ```
 `to_i64(value_to_convert)`, etc. The `types` module contains the same information for all number types...
 
-CHAPTER 3: OPERATORS
+## SECTION  3: OPERATORS
 ------------------------------------------------------------------------------------------------
+
+### 3.1 Arithmetic operators
 ```
-3.1 Arithmetic operators
 `+` Addition
 `-` Subtraction
 `*` Multiplication
@@ -137,9 +156,10 @@ CHAPTER 3: OPERATORS
 `%` Modulus
 `++` Increment `x++`
 `--` Decrement `x--`
-
-3.2 Assignment operators
+```
+### 3.2 Assignment operators
 List of all assignment operators:
+```
 `=` `x = 5` `x = 5`
 `+=` `x += 3` `x = x + 3`
 `-=` `x -= 3` `x = x - 3`
@@ -151,8 +171,9 @@ List of all assignment operators:
 `^=` `x ^= 3` `x = x ^3`
 `>>=` `x >>= 3` `x = x >> 3`
 `<<=` `x <<= 3` `x = x << 3`
-
-3.3 Comparison operators
+```
+### 3.3 Comparison operators
+```
 `==`Equal
 `===` Identical
 `!=` Not equal
@@ -162,16 +183,18 @@ List of all assignment operators:
 `<` Less than
 `>=` Greater than or equal to
 `<=` Less thanor equal to
-
-3.4 Logical operators
+```
+### 3.4 Logical operators
+```
 `and` And
 `&&` And
 `or` Or
 `||` Or
 `xor` Xor
 `!` Not
-
-3.5 Bitwise operators
+```
+### 3.5 Bitwise operators
+```
 Bitwise operators operate on individual bits of integers
 `&` : AND -
 `|` : OR -
@@ -181,44 +204,44 @@ Bitwise operators operate on individual bits of integers
 `>>`: Right shift
 ```
 
-CHAPTER 4: BUILT-IN FUNCTIONS CONTROL STATEMENTS
+## SECTION  4: BUILT-IN FUNCTIONS CONTROL STATEMENTS
 --------------------------------------------------------------------------------------
 
-4.1 if, if else, if else if else :
+### 4.1 if, if else, if else if else :
 if
 ```
 if (condition) {
-// code to be executed if condition is true;
+	// code to be executed if condition is true;
 }
 ```
 if else
 ```
 if (condition) {
-// code to be executed if condition is true;
+	// code to be executed if condition is true;
 } else {
-// code to be executed if condition is false;
+	// code to be executed if condition is false;
 }
 ```
 if elseif else
 ```
 if (condition) {
-code to be executed if this condition is true;
+	code to be executed if this condition is true;
 } elseif (condition) {
-// code to be executed if the first condition is false and this condition is true;
+	// code to be executed if the first condition is false and this condition is true;
 } else {
-// code to be executed if all conditions are false;
+	// code to be executed if all conditions are false;
 }
 ```
 if else shorthand
 `b:str = (a < 10) ? "Hello" : "Good Bye";`
 
-4.2 Pattern Matching The `match` expression and the `def` default case.
+### 4.2 Pattern Matching The `match` expression and the `def` default case.
 Match Expression (Pattern Matching)
 Checks a value against multiple patterns.
 ```
 Nim
 
-fn CheckStatus(code: int):void {
+fn CheckStatus(code: i32):void {
 	match (code) {
 		200: {
 			echo("Operation Successful.");
@@ -228,13 +251,13 @@ fn CheckStatus(code: int):void {
 			echo("Page not found.");
 		}
 		def: { // Default case
-			cho("Unknown HTTP code.");
+			echo("Unknown HTTP code.");
 		}
 	}
 }
 ```
 
-4.3 Controlled Jump `rolling:TAG` mechanism and `$rolling` counter.
+### 4.3 Controlled Jump `rolling:TAG` mechanism and `$rolling` counter.
 On error, rolls the stream back to a previous tag in the same scope. $rolling provides an automatic counter (starting at 0).
 Example:
 ```
@@ -273,7 +296,7 @@ Carrying the Counter Value: `$rolling` only holds the number of iterations.
 This prevents the variable from appearing "magical" and directly ties it to the `rolling` mechanism.
 Variable Declaration Location Task `$rolling` is implicitly defined within the block containing the `rolling` label.
 
-4.4 Group Structure:
+### 4.4 Group Structure:
 group definition: labeled entry points and chained access.
 It is a modular container with labeled entry points. `def` is the default label.
 ```
@@ -285,15 +308,21 @@ group TaskGroup(x:i32, y:i32, z:i32) {
 
 	// Labeled function
 	double: fn (x:i32):i32 -> x * 2;
-
+	
 	cube: { return x * x * x; }
+	
 	// Subgroup
 	sub_group: group(x) {
+	
 		// Subgroup label
+		
 		square: { return x * x; }
+		
 		// Subgroup default, not required.
+		
 		def: { echo("Subgroup default. Enrollment: {val}"); }
 	}
+	
 	// group Default. Not required.
 	def: { echo("Main Group Default. Enrollment: {val}"); }
 }
@@ -306,7 +335,7 @@ TaskGroup.sub_group.square(3); // calls the subgroup block. // output: "9"
 TaskGroup.sub_group(); // calls the subgroup def block if it exists. // output: "Subgroup default. Enrollment."
 }
 ```
-4.5 While Loop:
+### 4.5 While Loop:
 ```
 // while
 i:i8 = 0;
@@ -316,7 +345,7 @@ while (i < 5) {
 	i++;
 }
 ```
-4.6 For Loop:
+### 4.6 For Loop:
 ```
 `for (i, i < 5, i++) {...}` // i starts from 0
 `for (i=1, i <5, i++) {...}` // i starts from 1
@@ -329,7 +358,7 @@ for (colors in x) {
 }
 
 ```
-4.7 Break, continue, return statements:
+### 4.7 Break, continue, return statements:
 Even if the end of the loop has not been reached, we can stop the loop with the following statement: `break`.
 ```
 colors:arr = ("red", "green", "blue", "yellow");
@@ -349,7 +378,7 @@ for (i, i < 10, i++) {
 }
 ```
 
-4.8 Native I/O Functions echo, Input, len(data), and variable interpolation. These functions do not require an external module.
+### 4.8 Native I/O Functions echo, Input, len(data), and variable interpolation. These functions do not require an external module.
 I/O and Other Native Functions
 echo can also be used locally without any modules.requests.
 ```
@@ -357,8 +386,8 @@ echo can also be used locally without any modules.requests.
 `echo("Text { var }")`: `{ var }`, `{ var}`, `{var }`, `\{var}` are not variables, but strings.
 `echo(var)`: var is a variable here. When written without "", only variable names can be used to print.
 
-`prompt:i32 = input("Enter a number?")`: Takes input from the user. //print, in input module: io
-`len(data)`: Returns the length of the collection/string.
+`prompt:i32 = io.input("Enter a number?")`: Takes input from the user. //io.print, in input module: io
+`len(data)`: Returns the length of the collection/string. / strlen,  arrlen, 
 Escape characters such as `\` are supported.
 ```
 
@@ -373,10 +402,10 @@ list nums:i32 = [10, 20, 30];
 var count = len(nums); // len(data) syntax
 ```
 
-CHAPTER 5: FUNCTIONS AND SCOPE
+## SECTION  5: FUNCTIONS AND SCOPE
 ----------------------------------------------------------------------
 
-5.1 Function Definition: `fn` syntax, void non-return functions.
+### 5.1 Function Definition: `fn` syntax, void non-return functions.
 fn Function Definition.
 Function Parameters and Return: `fn <Name>(<param:type>,...):<Return Type>{...} `
 ```
@@ -398,7 +427,7 @@ echo(addNumbers(1.2, 5.2));
 `echo("Square a Number: {square(input("Enter a number:"))}");` // function use for parameters.
 ```
 
-5.2 Optional Arguments (param:type = value) and Named Argument Calling.
+### 5.2 Optional Arguments (param:type = value) and Named Argument Calling.
 Named and Optional Arguments
 Makes function calls more flexible and improves readability.
 Optional Argument: Created by assigning a default value to a parameter in the function definition.
@@ -425,30 +454,30 @@ fn Main() {
 }
 ```
 
-5.3 Callback
+### 5.3 Callback
 A callback function is a function passed as an argument to another function.
 You can also pass functions that take parameters - just make sure the function pointer type matches:
 ```
-fn addNumbers(a:int , b:int ) {
+fn addNumbers(a:i32 , b:i32 ) {
 	printf("The sum is: {a + b}");
 }
 
-fn calculate((*callback)(int, int), x:int , y:int ) {
+fn calculate( *fn(i32, i32), x:32 , y:i32 ) {
 	callback(x, y);
 }
 
-int main() {
+fn main() {
 	calculate(addNumbers, 5, 3);
 	return 0;
 }
 ```
 
-5.4 Asynchronous Programming:
+### 5.4 Asynchronous Programming:
 `async` (asynchronous function definition) and `await` (asynchronous wait for a result).
 
 This enables Coroutine-based concurrency in system programming and network operations.
 
-5.5 Error Path: Using `Option<T>` and `Result<T, E>`.
+### 5.5 Error Path: Using `Option<T>` and `Result<T, E>`.
 Error Path: Types representing the operation result:
 ```
 `Option<T>`: Indicates whether the value is present or absent (null).
@@ -458,9 +487,9 @@ Instead of throwing an error, it forces an error-free path by embedding the resu
 ```
 Nim
 
-// Returns an int on success and a string on error.
+// Returns an i32 on success and a string on error.
 
-fn SafeDivide:any(a:int, b:int) {
+fn SafeDivide:any(a:i32, b:i32):any {
 	if (b == 0) {
 		return (null, "Division by zero"); // Error path (Result: E)
 	}
@@ -472,15 +501,15 @@ echo(SafeDivide(9,3)); // Output: 3
 
 ```
 
-5.6 Inline function
+### 5.6 Inline function
 This is a small function that asks the compiler to insert its code directly into the call location, rather than jumping directly into the code.
 ```
-inline fn square(x:int ):int {
+inline fn square(x:i32 ):i32 {
 	return x * x;
 }
 ```
 
-5.7 Recursion
+### 5.7 Recursion
 Recursion is the technique of performing a function call on itself.
 
 This technique provides a way to break complex problems into simpler ones that are easier to solve.
@@ -488,7 +517,7 @@ This technique provides a way to break complex problems into simpler ones that a
 Example
 ```
 
-fn factorial(n:int):int {
+fn factorial(n:i32):i32 {
 	if (n > 1){
 		return n * factorial(n - 1);
 	}else{
@@ -496,7 +525,7 @@ fn factorial(n:int):int {
 	}
 }
 
-int main() {
+fn main() {
 	echo("Factorial of 5 is {factorial(5)}");
 	return 0;
 }
@@ -506,9 +535,12 @@ Factorial means multiplying a number by all the numbers following it up to 1.
 
 For example, the factorial of 5 is: 5 * 4 * 3 * 2 * 1 = 120.
 
-CHAPTER 6: MEMORY ADDRESS AND POINTER
+
+
+## SECTION  6: MEMORY ADDRESS AND POINTER
 ---------------------------------------------------
-6.1 Memory Address
+
+### 6.1 Memory Address
 When we assign a value to a variable, this value is stored at this memory address.
 To access this, use the reference operator `&`, and the result will show where the variable is stored:
 
@@ -519,7 +551,7 @@ echo(&myAge); // Outputs 0x7ffe5367e044
 Note that it is also often called a "pointer."
 `&myAge` A pointer essentially stores the memory address of a variable as its value.
 
-6.2 Pointer Pointer
+### 6.2 Pointer Pointer
 bildWhen used in a unit, it creates a pointer variable `*ptr:i32`.
 
 When not used in a declaration, it acts as a dereference operator.
@@ -533,10 +565,10 @@ When not used in a declaration, it acts as a dereference operator.
 // Dereference: Output the value of myAge with the pointer (42)
 `echo(*ptr);`
 
-6.3 Pointers and Arrays
+### 6.3 Pointers and Arrays
 You can also use pointers to access arrays.
 ```
-myNumbers[4]:int = {25, 50, 75, 100};
+myNumbers[4]:i32 = {25, 50, 75, 100};
 
 for (i, i < 4, i++) {
 	echo("\n{&myNumbers[i]}");
@@ -552,7 +584,7 @@ Result:
 ```
 Note that the last number in the memory address of each element is different and is added by 4.
 
-Because the size of an int(i32) type is 4 bytes.
+Because the size of an i32(i32) type is 4 bytes.
 
 The name of an array is actually a pointer to the first element of the array.
 The memory address of the first element is the same as the name of the array:
@@ -572,7 +604,7 @@ Result:
 This basically means we can work with arrays using pointers!
 Since `myNumbers` is a pointer to the first element in `myNumbers`, you can use the `*` operator to access it.
 
-6.3 Pointer Arithmetic:
+### 6.3 Pointer Arithmetic:
 Pointer Arithmetic Depends on the Type. Not all pointers behave the same.
 When you add to a pointer, the pointer moves by the size of the object it points to; not just by 1 byte.
 
@@ -583,19 +615,19 @@ A *pointer:char moves by the size of a character (1 byte).
 A *pointer:str moves the size of one character (4 bytes). UTF8 characters occupy 4 bytes.
 
 So, if both pointers start at memory address 1000:
-int *→ p + 1 would move to address 1004
+i32 *→ p + 1 would move to address 1004
 char *→ p + 1 would move to address 1001
 str *→ p + 1 would move to address 1004
 This shows that pointer movement depends on the data type it points to, not the number you insert:
 
-6.4 Function Pointer
+### 6.4 Function Pointer
 A function pointer is like a regular pointer, but instead of pointing to a variable, it points to a function.
 This means it stores the address of a function and allows you to call that function using the pointer.
 Function pointers allow you to decide which function to execute while the program is running, or when you want to pass a function as an argument to another function.
 They are useful for callbacks, menus, and flexible program design.
 ```
 `(*pointerName):returnType (parameterType1, parameterType2, ...);`
-`(*ptr):int(i32...);`
+`(*ptr):i32(i32...);`
 You can assign a function to a pointer in two ways:
 `ptr = add;`
 `ptr = &add;`
@@ -608,13 +640,13 @@ Both are valid and perform the same function.
 ```
 A pointer to a function that adds two numbers:
 ```
-add:int( a:int, b:int) {
+add( a:i32, b:i32):i32 {
 	return a + b;
 }
 
-int main() {
-	(*ptr):int(i32...) = add;
-	result:int = ptr(5, 3);
+fn main() {
+	(*ptr):i32(i32...) = add;
+	result:i32 = ptr(5, 3);
 	echo("Result: {result}");
 	return 0;
 }
@@ -626,13 +658,15 @@ Function pointers can be passed to other functions—this is called a callback.
 
 This allows a function you give as input to call another function.
 
-CHAPTER 7: STRUCTURES (structs)
+
+## SECTION  7: STRUCTURES (structs)
 --------------------------------------------------------------------------------------------
-7.1 struct
+
+### 7.1 struct
 Structures are a way to group several related variables together.
 Each variable in a structure is called a member of the structure.
 
-Unlike an array, a structure can contain many different data types (int, float, char, etc.).
+Unlike an array, a structure can contain many different data types (i32, float, char, etc.).
 ```
 // Create a structure called myStructure
 struct myStructure { // Structure name
@@ -640,7 +674,7 @@ struct myStructure { // Structure name
 	myLetter:char //
 }
 
-int main() {
+fn main() {
 	// Create a structure variable of myStructure called s1
 	myStructure => s1;
 
@@ -670,7 +704,7 @@ struct Car {
 	Owner => owner // Nested structure
 }
 
-int main() {
+fn main() {
 	Owner => person = {"John", "Doe"};
 	Car => car1 = {"Toyota", 2010, person};
 
@@ -694,30 +728,30 @@ struct Point {
 extend Point {
 	// Constructor function
 	fn new(x: i32, y: i32): Point {
-	return { x: x, y: y }; // Return with the struct literal
-}
+		return { x: x, y: y }; // Return with the struct literal
+	}
 
-// Immutable method (self: reference)
-fn get_x(self: ref): i32 {
-	return self.x;
-}
+	// Immutable method (self: reference)
+	fn get_x(self: ref): i32 {
+		return self.x;
+	}
 
-// Immutable method (self: ptr - pointer)
-fn move_to(self: ptr, new_x: i32, new_y: i32): void {
-	self.x = new_x;
-	self.y = new_y;
+	// Immutable method (self: ptr - pointer)
+	fn move_to(self: ptr, new_x: i32, new_y: i32): void {
+		self.x = new_x;
+		self.y = new_y;
 	}
 }
 
 // Usage:
-void fn Main() {
+fn Main() {
 	var p1 = Point.new(10, 20); // Calls the constructor
 	echo("X: {p1.get_x()}"); // Method call
 	p1.move_to(50, 60); // Replaceable method call
 }
 ```
 
-7.2 typedef
+### 7.2 typedef
 The keyword allows you to create a new name (an alias typedef) for an existing type.
 
 This makes complex declarations easier to read and your code easier to maintain.
@@ -726,7 +760,7 @@ For example, instead of always writing float, to make the code more understandab
 ```
 typedef Temperature:f32;
 
-int main() {
+i32 main() {
 	today:Temperature = 25.5;
 	tomorrow:Temperature = 18.6;
 
@@ -737,7 +771,7 @@ int main() {
 }
 ```
 
-7.3 Enum Enumeration
+### 7.3 Enum Enumeration
 An enum is a special type that represents a group of constants (immutable values).
 To create an enum, use the enum keyword, followed by the enum name and separate the enum elements with commas:
 ```
@@ -753,7 +787,7 @@ Using uppercase letters is not mandatory, but is often considered good practice.
 By default, the first element ( LOW ) has a value of 0, the second element ( MEDIUM ) has a value of 1, and so on.
 Now, if you try to print myVar, you will get output representing MEDIUM:
 ```
-int main() {
+i32 main() {
 	// Create an enum variable and assign a value to it
 	Level myVar = MEDIUM;
 	// echo the enum variable
@@ -784,13 +818,15 @@ enum Level {
 }
 ```
 
-CHAPTER 8: MEMORY / memory.nim module. See memory.md
+
+## SECTION  8: MEMORY / memory.nim module. See memory.md
 -------------------------------------------------------------------
+
 Default Memory Model Ownership Ownership rules and automatic management.
 
 Automatic Management: Dynamic types (`list`, `string`), etc., are automatically freed according to ownership rules.
 
-8.1 Low-level memory control functions.
+### 8.1 Low-level memory control functions.
 `memory` Group: Manual memory control (`memory.Alloc`, `memory.Calloc`, `memory.reAlloc`, `memory.Free`, etc.) is used by the programmer when necessary.
 
 Dynamic memory is not owned by a variable; it can only be accessed through pointers.
@@ -798,10 +834,10 @@ Dynamic memory is not owned by a variable; it can only be accessed through point
 You can use the `memory.Alloc` or `memory.Calloc` functions to allocate dynamic memory.
 
 You must include the header to use these. Both allocate a specified amount of memory and return a pointer to its address.
-
-*ptr1:int = memory.Alloc(size);
-*ptr2:int = memory.Calloc(amount, size);
-
+```
+*ptr1:i32 = memory.Alloc(size);
+*ptr2:i32 = memory.Calloc(amount, size);
+```
 
 The function determines how much memory, measured in bytes, is available. There is a parameter called `memory.Alloc(size)`, which specifies the allocated memory.
 
@@ -811,7 +847,7 @@ size - Specifies the size of each element, measured in bytes.
 
 The best way to allocate the correct amount of memory for a data type is to use the `sizeof` operator:
 ```
-*ptr1, *ptr2:int;
+*ptr1, *ptr2:i32;
 ptr1 = memory.Alloc(sizeof(*ptr1));
 ptr2 = memory.Calloc(1, sizeof(*ptr2));
 ```
@@ -819,13 +855,13 @@ ptr2 = memory.Calloc(1, sizeof(*ptr2));
 As mentioned earlier, we cannot use `sizeof` to measure how much memory is allocated; we must calculate it by multiplying the number of elements by the size of the data type:
 Example
 ```
-*students:int;
-numStudents:int = 12;
+*students:i32;
+numStudents:i32 = 12;
 students = memory.Calloc(numStudents, sizeof(*students));
 echo(numStudents * sizeof(*students)); // 48 bytes
 ```
 
-8.2 Accessing Dynamic Memory
+### 8.2 Accessing Dynamic Memory
 Dynamic memory behaves like an array whose data type is specified by the type of the pointer.
 
 As with arrays, to access an element in dynamic memory, look at its index number:
@@ -839,7 +875,7 @@ Example
 Reading and writing from dynamic memory:
 ```
 // Allocate memory
-*ptr:int;
+*ptr:i32;
 ptr = memory.Calloc(4, sizeof(*ptr));
 
 // Write to the memory
@@ -852,21 +888,21 @@ echo(*ptr);
 echo(ptr[1], ptr[2], ptr[3]);
 ```
 
-8.3 Reallocate Memory
+### 8.3 Reallocate Memory
 If the amount of memory you've allocated isn't enough, make it largerYou can reallocate it to resize it.
 Reallocation allocates a different (usually larger) amount of memory while preserving the data stored therein.
 
 You can change the size of the allocated memory using the function `memory.reAlloc()`.
 The function `memory.reAlloc()` takes two parameters:
 
-`*ptr2:int = memory.reAlloc(ptr1, size);`
+`*ptr2:i32 = memory.reAlloc(ptr1, size);`
 The first parameter is a pointer to the resized memory.
 The second parameter specifies the new size of the allocated memory in bytes.
 
 Increase the size of the allocated memory:
 Example
 ```
-*ptr1, *ptr2, size:int;
+*ptr1, *ptr2, size:i32;
 
 // Allocate memory for four integers
 size = 4 * sizeof(*ptr1);
@@ -888,7 +924,7 @@ Note: You should also always free the allocated memory when you're done.
 This is important to ensure your program behaves as expected,
 but it also makes it more maintainable and efficient.
 
-8.4 To free memory, simply use the `memory.free()` function:
+### 8.4 To free memory, simply use the `memory.free()` function:
 
 Example
 Free allocated memory:
@@ -898,16 +934,17 @@ memory.free(ptr1);
 ptr1 = null; // Set the pointer to `null` after freeing the memory.
 ```
 
-CHAPTER 9: MODULARITY AND SYSTEM
+
+## SECTION  9: MODULARITY AND SYSTEM
 ---------------------------------------------------
 
-9.1 Module System `export` and `use` (Selective/Full Import) rules.
+### 9.1 Module System `export` and `use` (Selective/Full Import) rules.
 How the Module System Works
 Default Visibility (Hidden)
 In NIM, all variables, constants, functions, and structures defined within a module (usually a file or a group block) are private by default.
 No other module can directly access these elements.
 
-9.2. Export (`export`)
+### 9.2. Export (`export`)
 The `export` keyword explicitly marks elements that a module wants to be accessible by other modules.
 Rule: For an element to be used elsewhere, it must be marked with export in the module in which it is defined.
 
@@ -922,14 +959,14 @@ var PI_INTERNAL = 3.14;
 export const PI = 3.14159;
 
 // Exported function
-export fn Add:i32(a:i32, b:i32) {
+export fn Add(a:i32, b:i32):i32 {
 	return a + b;
 }
 ```
-9.3. Importing (`use`)
+### 9.3. Importing (`use`)
 The `use` keyword is used to include elements exported from another module into the current module. There are two main usage patterns:
 
-9.3 -1 Full Module Import (Prefixed Usage)
+### 9.3 -1 Full Module Import (Prefixed Usage)
 The entire module is imported. The module name is used as a prefix to avoid naming conflicts during usage.
 
 Syntax: `use <module_name>;`
@@ -946,7 +983,7 @@ fn Main() {
 }
 ```
 
-9.3 -2 Selective Import (Direct Usage)
+### 9.3 -2 Selective Import (Direct Usage)
 Only certain elements from the module are imported by specifying them in curly brackets `{}`.
 Imported elements are directly prefixed with the `:module_name;` defined at the beginning of the module. This prevents name conflicts.
 
@@ -968,7 +1005,7 @@ fn Main() {
 }
 ```
 
-9.4 Module Writing:
+### 9.4 Module Writing:
 Application Example: Using `group` within a `Module`
 When designing a module, grouping all related operations into a single group significantly organizes that module's API (application programming interface).
 
@@ -986,7 +1023,7 @@ Grouping Within a Module: You group all HTTP-related operations into a group.
 //--------------------------------------------------------------------------------------
 
 :network; // Module name to use as prefix.
-export group HTTP(any...){ // Exporting group
+export group HTTP(any...):any{ // Exporting group
 	connect: { /* Connection code */ }
 
 	export get_data: { /* ... */ } // Can also be exported from within the group, preferable to the entire group.
@@ -996,7 +1033,7 @@ export group HTTP(any...){ // Exporting group
 	def: { HTTP.connect(); echo("HTTP Group Started."); }
 }
 
-export group SOCKET(any...){ // Exporting group
+export group SOCKET(any...):any{ // Exporting group
 	connect: { /* Connection code */ }......
 }
 ```
@@ -1009,7 +1046,7 @@ Nim
 // main.nim
 use network; // import the entire network module
 
-void fn Main() {
+fn Main(){
 	// Direct focus access to group and its tag
 	network.HTTP.get_data();
 
@@ -1024,10 +1061,11 @@ void fn Main() {
 Conclusion: The group structure is an excellent choice for writing modules because it allows you to break down large and complex APIs (data structures, I/O, memory) into logical units and allow the user to focus on the exact function they want through chained access.
 This maximizes both the modularity and readability of the language.
 
-10 CPU AND PERFORMANCE CONTROL
+
+## SECTION 10 CPU AND PERFORMANCE CONTROL
 -------------------------------------------------------------------
 
-10.1 Register Access cpu.nim
+### 10.1 Register Access cpu.nim
 Provides direct access to CPU registers so the programmer can optimize speed in performance-critical algorithms.
 
 Type Safety: Functions are implemented as `Generic (<T>)`. The type of the value must be specified for read and write operations.
@@ -1035,7 +1073,7 @@ Architectural Dependency: Register IDs `(id)` are semantically mapped to the com
 Syntax Description: `cpu.set_reg(id: i32, value: T)` Writes the value value to the specified id (register number) location.
 `T fn cpu.get_reg(id: i32)` Reads the value from the specified register and converts it to the type `T`.
 
-10.2 Fast Execution Scope
+### 10.2 Fast Execution Scope
 `(fast_exec: LABEL)` Indicates to the compiler that register allocation for variables and operations within a given code block should be prioritized.
 
 Rule: For variables within this block, the compiler attempts to use registers instead of stacks.
@@ -1079,7 +1117,7 @@ The `asm` block instructs the NIMBLE compiler to process the enclosed text as th
 ```nim
 Nim
 
-var addition_result: i64;
+var addition_result:i64;
 
 asm: ADDITION_CODE {
 	// Move the value 5 to rax
@@ -1091,7 +1129,7 @@ asm: ADDITION_CODE {
 }
 ```
 
-1.1 ASM Variable Access
+### 1.1 ASM Variable Access
 Assembly code within the asm block can access local variables of the surrounding NIMBLE function.
 This is the basic mechanism for exchanging data between Assembly and NIMBLE code.
 ```
@@ -1101,7 +1139,7 @@ Syntax, Purpose, Description
 (%variable_name), Access the value via the variable's address. "Depending on the assembly syntax, it may be necessary to use the address of the variable itself (%variable_name) or the contents of the address ((%variable_name))."
 ```
 
-2. Micro-Optimization: Scope of fast_exec
+### 1.2. Micro-Optimization: Scope of fast_exec
 Because the asm block is used for performance-critical purposes by nature, it is automatically considered within the scope of the fast_exec micro-optimization.
 ```
 Structure, Purpose, Description
@@ -1151,7 +1189,7 @@ The CPU module allows you to interact directly with the hardware (CPU), fine-tun
 CPU Processor Control and Performance Tools.
 Provides functions and tools to interact directly with kernels, registers, and processor instructions. Designed for high-performance system programming, embedded systems, and critical algorithms.
 
-1. Performance and Control Functions
+### 1. Performance and Control Functions
 These functions allow the programmer to manipulate and query the CPU environment in which code is running.
 FunctionPurposeSyntax and Description
 ```
@@ -1173,7 +1211,7 @@ FunctionPurposeSyntax and Description
 The cpu module is critical for the high-performance and low-level system programming goals of the NIMBLE language.
 The fast_exec and asm blocks in your document already address this area, so the module's function should be to more systematically define the behavior and capabilities of these blocks.
 
-2. Timing and Measurement Tools: Retrieves data directly from the CPU to measure the performance of critical code blocks.
+### 2. Timing and Measurement Tools: Retrieves data directly from the CPU to measure the performance of critical code blocks.
 ```
 `rdtsc()` Reads the value of the Timestamp Counter (RDTSC). Provides a very precise time measurement, but one that can be affected by frequency changes.
 `var t1 = cpu.rdtsc();`
@@ -1181,7 +1219,7 @@ The fast_exec and asm blocks in your document already address this area, so the 
 `get_freq()` Returns the current CPU operating frequency (in MHz).
 `var freq = cpu.get_freq();`
 ```
-3. Assembly (ASM) Integration
+### 3. Assembly (ASM) Integration
 The `asm:TAG { ... }` construct, already present in the documentation, should be considered a natural extension of the cpu module.
 
 `asm:TAG { ... }` Inline Assembly Block. Allows writing assembly code directly.
@@ -1231,20 +1269,20 @@ fn Main() {
 
 	// Using the match statement for error checking
 	match fileResult {
-		Ok(handle) => {
+		Ok(handle):{
 			var contentResult = file.read_all(handle);
 
 			match contentResult {
-				Ok(content) => {
+				Ok(content):{
 					print("File Content:\n{content}");
 				},
-				Err(error) => {
+				Err(error):{
 					print("Read Error: {error}");
 				}
 			}
 			file.close(handle); // Close the file
 		},
-		Err(error) => {
+		Err(error):{
 			// File not found, access denied, etc.
 			print("Error Opening File: {error}");
 		}
@@ -1259,7 +1297,7 @@ fn WriteExample() {
 	var fileResult = file.open("log.txt", file.WRITE);
 
 	match fileResult {
-		Ok(handle) => {
+		Ok(handle) : {
 			var writeResult = file.write(handle, "This is the log message.\n");
 
 			if writeResult.is_ok() {
@@ -1269,7 +1307,7 @@ fn WriteExample() {
 			}
 			file.close(handle);
 		},
-		Err(error) => {
+		Err(error) : {
 			print("Error Opening File: {error}");
 		}
 	}
@@ -1546,7 +1584,7 @@ fn JsonExample() {
 	var parseResult = json.parse(json_str);
 
 	match parseResult {
-		Ok(data) => {
+		Ok(data) : {
 			// Safe access to data
 			var name = data.get("name").as_str().unwrap_or("?");
 			var version = data.get("version").as_f64().unwrap_or(0.0);
@@ -1558,7 +1596,7 @@ fn JsonExample() {
 			var first_number = data.get("list").at(0).as_i32().unwrap_or(-1);
 			print("First number in list: {first_number}"); // 10
 		},
-		Err(error) => {
+		Err(error) : {
 			print("JSON Parse Error: {error}");
 		}
 	}
@@ -1617,12 +1655,12 @@ fn RegexExample() {
 	var regexResult = regex.compile(email_pattern);
 
 	match regexResult {
-		Ok(email_regex) => {
+		Ok(email_regex) : {
 			// 2. Find a Match
 			var matchOption = email_regex.find(test_email);
 
 			match matchOption {
-				Some(match_data) => {
+				Some(match_data) : {
 					print("Match Successful.");
 					// Access Capture Groups
 					var user = match_data.group(1);
@@ -1631,7 +1669,7 @@ fn RegexExample() {
 					print("User Name: {user}"); // username
 					print("Domain Name: {domain}"); // nimble
 				},
-				None => {
+				None : {
 					print("Email format is incorrect.");
 				}
 			}
@@ -1642,7 +1680,7 @@ fn RegexExample() {
 			var new_text = date_regex.replace(old_text, "NEW DATE");
 			print("Changed: {new_text}"); // Date NEW DATE
 		},
-		Err(error) => {
+		Err(error) : {
 			print("Pattern Compilation Error: {error}");
 		}
 	}
@@ -1694,25 +1732,25 @@ fn ConsoleExample() {
 	var isimResult = io.prompt("Please enter your name: ");
 
 	match isimResult {
-		Ok(name) => {
+		Ok(name) : {
 			io.println("Hello, {name}!");
 
 			// 2. Receiving and converting numeric input
 			var yasResult = io.prompt("Please enter your age: ");
 
 			match yasResult {
-				Ok(yas_str) => {
+				Ok(yas_str) : {
 					// Converting a string to an integer
 					// Assuming there is a parse function in NIMBLE's string module or in the basic language.
 					var yas: i32 = string.to_i32(yas_str).unwrap_or(0);
 					io.println("So, you are {yas} years old.");
 				},
-				Err(error) => {
+				Err(error) : {
 					io.err_print("An error occurred while reading the input.");
 				}
 			}
 		},
-		Err(error) => {
+		Err(error) : {
 			io.err_print("Could not read name.");
 		}
 	}
@@ -1773,13 +1811,13 @@ fn TypesExample() {
 	// Safe Conversion (f64 -> i32)
 	// Should be explicit due to the risk of data loss, but Result is unnecessary in this case.
 	var int_val_safe: i32 = types.to_i32(float_val).as_type<i32>(); // 123
-	print("Safe Conversion (int): {int_val_safe}");
+	print("Safe Conversion (i32): {int_val_safe}");
 
 	// Safe String Parsing (str -> i32)
 	var parseResult = types.parse<i32>(string_val);
 	match parseResult {
-		Ok(i) => { print("Successful parse: {i}"); }, // 42
-		Err(e) => { print("Error: {e}"); }
+		Ok(i) : { print("Successful parse: {i}"); }, // 42
+		Err(e) : { print("Error: {e}"); }
 	}
 
 	// Failed String Parsing
@@ -1849,7 +1887,7 @@ fn MemoryExample() {
 	var allocResult = memory.calloc(10, I32_SIZE);
 
 	match allocResult {
-		Ok(ptr_val) => {
+		Ok(ptr_val) : {
 			data_ptr = ptr_val;
 
 			// 2. Using Memory (Pointer Arithmetic and Unsafe Access)
@@ -1860,16 +1898,16 @@ fn MemoryExample() {
 			var reallocResult = memory.realloc(data_ptr, 20 * I32_SIZE);
 
 			match reallocResult {
-				Ok(new_ptr) => {
+				Ok(new_ptr) : {
 					data_ptr = new_ptr;
 					print("Memory resized. Initial value: { (data_ptr as *i32)[0] }");
 				},
-				Err(e) => {
+				Err(e) : {
 					print("Resizing failed: {e}");
 				}
 			}
 		},
-		Err(e) => {
+		Err(e) : {
 			print("Memory allocation failed: {e}");
 		}
 	}
@@ -1946,7 +1984,7 @@ fn GpuExample() {
 	var deviceResult = gpu.select_device(0); // Select first GPU 
 
 		match deviceResult {
-		Ok(dev) => { 
+		Ok(dev) : { 
 			var size = 1024; 
 			var cpu_a: i32[] = array.new_filled(size, 1); 
 			var cpu_b: i32[] = array.new_filled(size, 2); 
@@ -1973,7 +2011,7 @@ fn GpuExample() {
 			gpu.free_array(gpu_b);
 			gpu.free_array(gpu_result);
 		},
-		Err(e) => {
+		Err(e) : {
 			io.err_print("GPU device not found: {e}");
 		}
 	}
@@ -2028,7 +2066,7 @@ fn TcpClientExample() {
 	var connectResult = net.tcp_connect(server_addr);
 
 	match connectResult {
-		Ok(sock) => {
+		Ok(sock) : {
 			io.println("Successfully connected to the server.");
 
 			// 2. Send Data
@@ -2050,7 +2088,7 @@ fn TcpClientExample() {
 
 			net.close(sock);
 		},
-		Err(e) => {
+		Err(e) : {
 			io.err_print("Connection Error: {e}");
 		}
 	}
@@ -2192,10 +2230,10 @@ fn OsExample() {
 	// 2. Accessing Environment Variables
 	var userEnv = os.get_env("USER");
 	match userEnv {
-		Some(user) => {
+		Some(user) : {
 			io.println("User: {user}");
 		},
-		None => {
+		None : {
 			io.err_print("USER environment variable not found.");
 		}
 	}
@@ -2434,7 +2472,7 @@ fn CryptoExample():void {
 	var cipher_result = crypto.encrypt_aes(aes_key, iv, data);
 
 	match cipher_result {
-		Ok(encrypted) => {
+		Ok(encrypted) : {
 			io.println("Encrypted Data Length: {encrypted.count()}");
 
 			// Decryption 
@@ -2444,7 +2482,7 @@ fn CryptoExample():void {
 				io.println("Decrypted Message: {string.from_bytes(decrypted_data)}"); 
 			} 
 		}, 
-		Err(e) => { 
+		Err(e) : { 
 			io.err_print("Encryption Error: {e}"); 
 		} 
 	}
@@ -2478,12 +2516,10 @@ Function Purpose Syntax and Description
 
 `set()` Adds a new key-value pair to the map or updates an existing one.
 
-```
-```
+
 user_data.set["name", "Alp"];
 user_data.set[1001, "ID");
-```
-```
+
 `get()` Returns the value corresponding to the given key. If the key is not found, it returns `null` or can optionally return `Result<V, Error>`.
 `var name = user_data["name"];`
 
@@ -2543,11 +2579,11 @@ Nim
 var fileResult = file.open("config.ini", file.READ);
 
 match fileResult {
-	Ok(handle) => {
+	Ok(handle) : {
 		// Success: Continue processing
 		...
 	},
-	Err(error) => {
+	Err(error) : {
 		// Error: Take action specific to the error type
 		io.err_print("File Error: {error}");
 	}
@@ -2586,104 +2622,106 @@ fn process_data(data: i32[]) {
 }
 ```
 
-## SECTION 14.0: Preprocessor and Compilation Directives
+## BÖLÜM 14.0: Ön İşlemci ve Derleme Direktifleri
 
-NIMBLE uses a series of directives to influence the compilation phase of code, including or excluding platform-specific code fragments, and issuing special instructions to the compiler. These directives typically begin with the **`#`** symbol and are processed during the pre-compilation phase.
+NIMBLE, kodun derleme aşamasını etkilemek, platforma özgü kod parçalarını dahil etmek veya hariç tutmak ve derleyiciye özel talimatlar vermek için bir dizi direktif (yönerge) kullanır. Bu direktifler, genellikle **`#`** sembolü ile başlar ve derleme öncesi aşamada işlenir.
 
-### 1. Conditional Compilation Directives
+### 1. Şartlı Derleme Direktifleri
 
-These directives cause code to be compiled under certain conditions.
+Bu direktifler, kodun belirli koşullar altında derlenmesini sağlar.
 
-| Directive | Purpose | Syntax | Description |
-| :--- | :--- | :--- | :--- |
-| **`#ifdef`** | Compiles code if the specified symbol is defined. | `#ifdef <SYMBO L>` | Checks for the existence of a symbol such as `#define DEBUG`. |
-| **`#ifndef`** | Compiles code if the specified symbol is not defined. | `#ifndef <SYMBOL L>` | |
-| **`#if`** | Compiles the code if the specified condition (compile-time expression) is true. | `#if <condition>` | The condition can contain constant expressions, `const` values, or defined symbols. |
-| **`#elif`** | Checks for a new condition if the previous `#if` fails. | `#elif <condition>` | |
-| **`#else`** | Compiles the code if the previous conditions fail. | `#else` | |
-| **`#endif`** | Ends the conditional compilation block. | `#endif` | |
+| Direktif 	| Amaç 	| Söz Dizimi 	|  Açıklama |
+| :--- 		| :--- 		| :--- 		| :--- 		|
+| **`#ifdef`**  | Belirtilen sembol tanımlıysa kodu derler. | `#ifdef <SEMBO L>` 	| `#define DEBUG` gibi bir sembol varlığını kontrol eder. |
+| **`#ifndef`** | Belirtilen sembol tanımlı değilse kodu derler. | `#ifndef <SEMBO L>` | |
+| **`#if`** 	| Belirtilen koşul (derleme zamanı ifadesi) doğruysa kodu derler. | `#if <koşul>` 	| Koşul, sabit ifadeler, `const` değerler veya tanımlı semboller içerebilir. |
+| **`#elif`** 	| Önceki `#if` başarısız olursa yeni bir koşulu kontrol eder. | `#elif <koşul>` 	| |
+| **`#else`** 	| Önceki şartlar başarısız olursa kodu derler. | `#else` 	| |
+| **`#endif`** 	| Şartlı derleme bloğunu sonlandırır. 		| `#endif` 	| |
 
-**Example: Platform-Specific Code and the DEBUG Flag**
+**Örnek: Platforma Özgü Kod ve DEBUG Bayrağı**
 
 ```nim
 Nim
 
 #ifdef WINDOWS
-io.println("Windows-specific code is running.");
-#elif LINUX
-io.println("Linux-specific code is running.");
+    io.println("Windows için özel kod çalışıyor.");
+#elif LINUX 
+    io.println("Linux için özel kod çalışıyor.");
 #endif
 
-#ifdef DEBUG
-log.debug("Debug mode is active.");
+#ifdef DEBUG 
+    log.debug("Debug modu aktif.");
 #endif
 ```
-2. Preprocessor Macros and Text Substitution
-The #define directive is used for simple text substitution and parameterized macros.
-This process occurs before code analysis and compilation.
+2. Ön İşlemci Makroları ve Metin İkamesi
+#define direktifi, basit metin ikamesi (text substitution) ve parametreli makrolar için kullanılır. 
+Bu işlem, kod analizi ve derlemeden önce gerçekleşir.```
 
-2.1 Fixed Macros and Text Substitution
-```
-Directive, Purpose, Description
-#define <NAME> <VALUE>,
-"Ensures that all occurrences of the <NAME> symbol are replaced with <VALUE> at compile time.",```
+2.1 Sabit Makrolar ve Metin İkamesi
 
-Example: Code Fragment Substitution
+Direktif,Amaç,Açıklama
+#define <AD> <DEĞER>,
+"Derleme zamanında <AD> sembolünün geçtiği her yerde, <DEĞER> ile değiştirilmesini sağlar.",```
+
+
+Örnek: Kod Parçası İkamesi
 ```
 Nim
-```
+
 #define APPLICATION_NAME "NIMBLE v1.0"
-#define ERROR_CLOSURE io.err_print("Error! Closing."); os.exit(1);
+#define HATA_KAPATMA io.err_print("Hata! Kapatılıyor."); os.exit(1);
 
 void fn Main() {
-io.println(APPLICATION_NAME);
-// ...
-ERROR_CLOSURE // Two lines of code are placed here.
+    io.println(APPLICATION_NAME);
+    // ...
+    HATA_KAPATMA // Buraya iki satır kod yerleştirilir.
 }
 ```
 
-2.2 Parameterized Macros
-Enables a macro to perform more dynamic text substitution by taking arguments.
+2.2 Parametreli Makrolar
+Makronun argüman alarak daha dinamik metin ikamesi gerçekleştirmesini sağlar.
 
-Syntax, Purpose
-```
-"#define <AD>(<arg1>, ...)", A macro that generates a code fragment using arguments.
-```
-Example: Parameterized Macro
+
+Söz Dizimi,Amaç
+
+#define <AD>(<arg1>, ...)",Argümanları kullanarak kod parçası üreten makro.
+
+Örnek: Parametreli Makro
 ```
 Nim
 
-// The macro directly replaces the arguments with text.
+// Makro, argümanları doğrudan metin olarak değiştirir.
 #define MIN(a, b) ( (a) < (b) ? (a) : (b) )
-
-void fn MacroExample() {
-var x = 10;
-var y = 20;
-
-// Before compilation: ( (x) < (y) ? (x) : (y) )
-var small = MIN(x, y);
+```
+fn MacroExample():void {
+    var x = 10;
+    var y = 20;
+    
+    // Derleme öncesi: ( (x) < (y) ? (x) : (y) )
+    var kucuk = MIN(x, y);
 }
 ```
 
-3. File Inclusion and Streaming Directives
+3. Dosya Dahil Etme ve Akış Direktifleri
 ```
-Directive, Purpose, Syntax, Description
-#include,"Includes (Copy/Paste) the contents of the specified file at the location of the directive during compilation.",
-"#include ""title.nim""",Used at a low level instead of using (logical module inclusion).
-#undef,Undefines a previously defined symbol.,
-#undef <SYMBO L>,
+Direktif,Amaç,Söz Dizimi,Açıklama
+#include,"Belirtilen dosyanın içeriğini, derleme sırasında direktifin bulunduğu yere ekler (Kopyala/Yapıştır).",
+"#include ""baslik.nim""",use (mantıksal modül dahil etme) yerine düşük seviyede kullanılır.
+#undef,Daha önce tanımlanmış bir sembolün tanımını kaldırır.,
+#undef <SEMBO L>,
 ```
 
-4. Error and Optimization Directives
+4. Hata ve Optimizasyon Direktifleri
 ```
-Directive, Purpose, Syntax, Description
-#error,Stops the compilation process and displays the specified message as an error.,
-"#error ""<message>""",
-#warning,"Does not stop the compilation process, but displays a warning.",
-"#warning ""<message>""",
-#optimize,Controls compiler optimizations at the function or block level.,
+Direktif,Amaç,Söz Dizimi,Açıklama
+#error,Derleme işlemini durdurur ve belirtilen mesajı hata olarak gösterir.,
+"#error ""<mesaj>""",
+#warning,"Derleme işlemini durdurmaz, ancak uyarı gösterir.",
+"#warning ""<mesaj>""",
+#optimize,Fonksiyon veya blok seviyesinde derleyici optimizasyonlarını kontrol eder.,
 #optimize speed,
-#inline,"Instructs the compiler to attempt to inline a function where it is called.",
+#inline,"Derleyiciye, bir fonksiyonu çağrıldığı yerde satır içine almayı (inline) denemesi için talimat verir.",
 #inline fn my_func() { ... },
 ```
 
@@ -2750,20 +2788,18 @@ export group UserModule {
 
 	// The name field is accessible because it is pub, and the id field is private.
 	pub struct User {
-		pub name: str,
-		id: i32 // Default: Accessible only within the UserModule.
+		pub name:str,
+		id:i32 // Default: Accessible only within the UserModule.
 	}
 
 	// Factory function: Creates a new user
-	pub fn create_user(name: str): User {
+	pub create_user: fn (name:str) User {
 		// The id field can be set here because we are in a group.
 		return User { name: name, id: 12345 };
 	}
 
 	// Private helper function
-	fn generate_id(): i32 {
-		return 999;
-	}
+	generate_id: fn (i32) { return 999; }
 }
 
 // Using Another Module:
@@ -2784,7 +2820,7 @@ fn TestAccess():void {
 
 ```
 
-2. Nesting Groups and Structs
+### 2. Nesting Groups and Structs
 Complex modular structures can be created by defining groups and structs within each other.
 
 Relationship, Purpose, Rule
@@ -2804,7 +2840,7 @@ export struct Vector3 {
 	// group contains the methods of the Vector3 structure.
 	pub group Methods {
 		// Methods take the 'self' parameter.
-		pub fn length(self: Vector3): f32 {
+		pub length: fn (self.Vector3):f32 {
 			// Requires access to the math module.
 			return math.sqrt(self.x*self.x + self.y*self.y + self.z*self.z);
 		}
@@ -2871,18 +2907,18 @@ fn FFIExample() {
 
 ```
 
-3. Data Type Bridging
+### 3. Data Type Bridging
 NIMBLE uses safe type bridging for FFI.
-The programmer is expected to use the NIMBLE types (i32, f64, str, *T) appropriately with the corresponding C types (int, double, char*, void*).
+The programmer is expected to use the NIMBLE types (i32, f64, str, *T) appropriately with the corresponding C types (i32, double, char*, void*).
 ```
 NIMBLE Type, C Equivalent, Description
-"i32, u64","int, unsigned long long", Size matching is important.
+"i32, u64","i32, unsigned long long", Size matching is important.
 "f32, f64","float, double", Standard floating-point types.
 *T, T* (Pointer), Corresponds to raw memory addresses.
 str, const char*, For readable string data (conversion may be required if the NIMBLE string format is different).
 ```
 
-4. Unsafe Area (unsafe)
+### 4. Unsafe Area (unsafe)
 Because FFI calls inherently allow unsafe operations (working with raw pointers, memory management),
 NIMBLE code that calls FFI may need to be enclosed in unsafe blocks.
 
